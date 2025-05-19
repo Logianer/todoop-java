@@ -13,9 +13,9 @@
 ## Bewertung
 
 - Entwickler-Dokumentation **20%**
-  - JavaDoc, readthedocs...
-  - Erklärung der wichtigsten Funktionen (mit Text, ganze Sätze)
-  - Klassendiagramm
+  - [ ] JavaDoc, readthedocs...
+  - [ ] Erklärung der wichtigsten Funktionen (mit Text, ganze Sätze)
+  - [ ] Klassendiagramm
 - Programmierung und Funktionalität **60%**
   - Codestruktur, Codeumfang, Lesbarkeit
   - Umsetzung und Funktionalität
