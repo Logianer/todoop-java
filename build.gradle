@@ -8,6 +8,10 @@ plugins {
     id "java"
 }
 
+repositories {
+  mavenCentral()
+}
+
 jar {
     manifest {
         attributes 'Main-Class': 'de.dhsn_ooe.todo.Main'
