@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.dhsn_ooe.todo.Exception.TodoListNotFoundException;
-import de.dhsn_ooe.todo.Model.TodoList;
+import de.dhsn_ooe.todo.Model.AbstractTodoList;
 import de.dhsn_ooe.todo.Model.TodoListRepository;
 import de.dhsn_ooe.todo.Model.TodoListType;
 
@@ -23,12 +23,12 @@ public class TodoListController {
 
 
   @GetMapping("/list")
-  Iterable<TodoList> all() {
+  Iterable<AbstractTodoList> all() {
     return repository.findAll();
   }
 
   @PostMapping("/list")
-  TodoList newTodoList(@RequestBody TodoList newTodoList) {
+  AbstractTodoList newTodoList(@RequestBody AbstractTodoList newTodoList) {
     if (newTodoList.getType() != TodoListType.NOTE) {
       newTodoList.setHtmlContent(null);
     }
@@ -36,14 +36,14 @@ public class TodoListController {
   }
 
   @GetMapping("/list/{id}")
-  TodoList one(@PathVariable Long id) {
+  AbstractTodoList one(@PathVariable Long id) {
     
     return repository.findById(id)
       .orElseThrow(() -> new TodoListNotFoundException(id));
   }
 
   @PutMapping("/list/{id}")
-  TodoList replaceTodoList(@RequestBody TodoList newTodoList, @PathVariable Long id) {
+  AbstractTodoList replaceTodoList(@RequestBody AbstractTodoList newTodoList, @PathVariable Long id) {
     
     return repository.findById(id)
       .map(TodoList -> {

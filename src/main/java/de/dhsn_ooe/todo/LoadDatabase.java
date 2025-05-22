@@ -6,7 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import de.dhsn_ooe.todo.Model.TodoList;
+import de.dhsn_ooe.todo.Model.AbstractTodoList;
 import de.dhsn_ooe.todo.Model.TodoListRepository;
 import de.dhsn_ooe.todo.Model.TodoListType;
 
@@ -19,8 +19,8 @@ class LoadDatabase {
   CommandLineRunner initDatabase(TodoListRepository repository) {
 
     return args -> {
-      log.info("Preloading " + repository.save(new TodoList(TodoListType.NOTE, "First List")));
-      log.info("Preloading " + repository.save(new TodoList(TodoListType.NOTE, "Project X")));
+      log.info("Preloading " + repository.save(new AbstractTodoList(TodoListType.NOTE, "First List")));
+      log.info("Preloading " + repository.save(new AbstractTodoList(TodoListType.NOTE, "Project X")));
     };
   }
 }
