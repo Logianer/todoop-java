@@ -9,41 +9,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.dhsn_ooe.todo.Exception.TodoListNotFoundException;
-import de.dhsn_ooe.todo.Model.AbstractTodoList;
-import de.dhsn_ooe.todo.Model.TodoListRepository;
-import de.dhsn_ooe.todo.Model.TodoListType;
+import de.dhsn_ooe.todo.Model.TodoCheckList;
+import de.dhsn_ooe.todo.Model.TodoCheckListRepository;
 
 @RestController
-public class TodoListController {
-	private final TodoListRepository repository;
+public class TodoCheckListController {
+	private final TodoCheckListRepository repository;
 
-  TodoListController(TodoListRepository repository) {
+  TodoCheckListController(TodoCheckListRepository repository) {
     this.repository = repository;
   }
 
 
   @GetMapping("/list")
-  Iterable<AbstractTodoList> all() {
+  Iterable<TodoCheckList> all() {
     return repository.findAll();
   }
 
   @PostMapping("/list")
-  AbstractTodoList newTodoList(@RequestBody AbstractTodoList newTodoList) {
-    if (newTodoList.getType() != TodoListType.NOTE) {
-      newTodoList.setHtmlContent(null);
-    }
-    return repository.save(newTodoList);
+  TodoCheckList newTodoCheckList(@RequestBody TodoCheckList newList) {
+      return repository.save(newList);
   }
 
   @GetMapping("/list/{id}")
-  AbstractTodoList one(@PathVariable Long id) {
+  TodoCheckList one(@PathVariable Long id) {
     
     return repository.findById(id)
       .orElseThrow(() -> new TodoListNotFoundException(id));
   }
 
   @PutMapping("/list/{id}")
-  AbstractTodoList replaceTodoList(@RequestBody AbstractTodoList newTodoList, @PathVariable Long id) {
+  TodoCheckList updateTodoCheckList(@RequestBody TodoCheckList newTodoList, @PathVariable Long id) {
     
     return repository.findById(id)
       .map(TodoList -> {
@@ -56,7 +52,7 @@ public class TodoListController {
   }
 
   @DeleteMapping("/list/{id}")
-  void deleteTodoList(@PathVariable Long id) {
+  void deleteTodoCheckList(@PathVariable Long id) {
     repository.deleteById(id);
   }
 }
