@@ -5,7 +5,8 @@
  * Learn more about Gradle by exploring our Samples at https://docs.gradle.org/8.13/samples
  */
 plugins {
-    id "java"
+    id "application"
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 repositories {
@@ -13,6 +14,9 @@ repositories {
 }
 
 dependencies {
+    implementation "com.formdev:flatlaf:3.6"
+    implementation "com.formdev:flatlaf-intellij-themes:3.6"
+    implementation "org.kordamp.ikonli:ikonli-material2-pack:12.4.0"
 }
 
 repositories {
@@ -23,4 +27,8 @@ jar {
     manifest {
         attributes 'Main-Class': 'de.dhsn_ooe.todo.Main'
     }
+}
+
+application {
+    mainClass = 'de.dhsn_ooe.todo.Main'
 }
