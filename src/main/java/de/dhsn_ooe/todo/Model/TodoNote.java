@@ -1,8 +1,5 @@
 package de.dhsn_ooe.todo.Model;
 
-import jakarta.persistence.Entity;
-
-@Entity
 public class TodoNote extends AbstractTodoList {
 
     private String htmlContent;

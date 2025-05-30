@@ -1,14 +1,8 @@
 package de.dhsn_ooe.todo.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-
-@Entity
 public class TodoItem {
 
-    private @Id
-    @GeneratedValue Long id;
+    private Long id;
     private String stringContent;
     private boolean doneState;
     public TodoItem() {}

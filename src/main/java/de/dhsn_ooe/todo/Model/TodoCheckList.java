@@ -4,14 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import de.dhsn_ooe.todo.Exception.TodoItemNotFoundException;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
 
-@Entity
 public class TodoCheckList extends AbstractTodoList {
 
-
-    @OneToMany(mappedBy = "id")
     private Collection<TodoItem> checkItems;
 
     public TodoCheckList() {
