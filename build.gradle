@@ -17,6 +17,7 @@ dependencies {
     implementation "com.formdev:flatlaf:3.6"
     implementation "com.formdev:flatlaf-intellij-themes:3.6"
     implementation "org.kordamp.ikonli:ikonli-material2-pack:12.4.0"
+    implementation "org.xerial:sqlite-jdbc:3.49.1.0"
 }
 
 repositories {
