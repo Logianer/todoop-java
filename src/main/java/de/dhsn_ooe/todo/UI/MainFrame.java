@@ -4,21 +4,21 @@ import java.awt.Container;
 
 import javax.swing.JFrame;
 
+import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+
 
 public class MainFrame extends JFrame {
 
     Container cp = this.getContentPane();
-
+    FlatLaf theme = new FlatLightLaf();
     public MainFrame() {
         super();
         FlatLightLaf.setup();
-
         this.setSize(800, 600);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        cp.add(new Dashboard(theme));
         this.setVisible(true);
-        this.add(new Dashboard());
-        this.setTitle("LOL");
     }
 }
