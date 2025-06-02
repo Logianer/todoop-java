@@ -5,11 +5,11 @@ import java.awt.font.TextAttribute;
 
 import javax.swing.JFrame;
 
-import de.dhsn_ooe.todo.Helpers.Fonts.fontEditor;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoItem;
-import de.dhsn_ooe.todo.UI.MainFrame;
 import de.dhsn_ooe.todo.UI.Components.TodoCheckboxList;
+import de.dhsn_ooe.todo.UI.Helpers.Fonts.fontEditor;
+import de.dhsn_ooe.todo.UI.MainFrame;
 
 /**
  * The Main class

@@ -1,4 +1,4 @@
-package de.dhsn_ooe.todo.Helpers.Fonts;
+package de.dhsn_ooe.todo.UI.Helpers.Fonts;
 
 import java.awt.Font;
 import java.awt.font.TextAttribute;

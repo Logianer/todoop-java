@@ -1,5 +1,6 @@
 package de.dhsn_ooe.todo.Model;
 
+
 public class TodoItem {
 
     private Long id;
@@ -26,4 +27,5 @@ public class TodoItem {
     public Long getId() {
         return id;
     }
+
 }

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
-import java.util.ArrayList;
 
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
