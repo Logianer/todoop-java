@@ -1,6 +1,5 @@
 package de.dhsn_ooe.todo.UI.Views;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ComponentAdapter;

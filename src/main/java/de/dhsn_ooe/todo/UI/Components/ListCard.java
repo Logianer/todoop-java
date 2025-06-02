@@ -1,6 +1,5 @@
 package de.dhsn_ooe.todo.UI.Components;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

@@ -7,8 +7,8 @@ import java.awt.font.TextAttribute;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import de.dhsn_ooe.todo.Model.TodoCheckboxList;
 import de.dhsn_ooe.todo.UI.MainFrame;
+import de.dhsn_ooe.todo.UI.Components.TodoCheckboxList;
 
 /**
  * The Main class
@@ -20,6 +20,7 @@ public class Main {
     public static void main(String[] args) {
         new MainFrame();
 
+        if (false) {
         //create JFrame
         JFrame frame = new JFrame("Checkbox List Example");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,6 +48,6 @@ public class Main {
         //make the panel visible
         frame.add(panel);
         frame.setVisible(true);
-
+        };
     }
 }

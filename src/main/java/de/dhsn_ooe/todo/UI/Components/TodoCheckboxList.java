@@ -1,4 +1,4 @@
-package de.dhsn_ooe.todo.Model;
+package de.dhsn_ooe.todo.UI.Components;
 
 import java.awt.*;
 import java.awt.event.ItemEvent;
@@ -10,11 +10,7 @@ import java.util.Map;
 import javax.swing.*;
 
 public class TodoCheckboxList {
-    private ArrayList <JCheckBox> checkboxes;
-
-    public TodoCheckboxList(){
-        checkboxes = new ArrayList<>();
-    }
+    private ArrayList <JCheckBox> checkboxes = new ArrayList<>();
 
     public Font createFont(TextAttribute attribute1, Boolean attribute2){
         Font font = new Font("helvetica", Font.PLAIN, 12);
