@@ -1,51 +1,48 @@
 package de.dhsn_ooe.todo.UI.Components;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.font.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import javax.swing.*;
 
-public class TodoCheckboxList {
-    private ArrayList <JCheckBox> checkboxes = new ArrayList<>();
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
 
-    public Font createFont(TextAttribute attribute1, Boolean attribute2){
-        Font font = new Font("helvetica", Font.PLAIN, 12);
-        Map <TextAttribute, Object> attributes = new HashMap<>(font.getAttributes());
-        attributes.put(attribute1, attribute2);
-        Font newFont = new Font(attributes);
-        return newFont;
-    }
+import de.dhsn_ooe.todo.Model.TodoCheckList;
 
-    public void addCheckbox(String text, Font font1, Font font2, JPanel panel, TodoCheckboxList list){
-        JCheckBox checkBox = new JCheckBox(text);
-        checkBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    JCheckBox element = checkBox;
-                    checkboxes.remove(element);
-                    checkBox.setForeground(Color.GRAY);
-                    checkBox.setFont(font1);
-                    checkboxes.add(element);
-                    printCheckboxes(panel);
-                } else {
-                    checkBox.setForeground(Color.BLACK);
-                    checkBox.setFont(font2);
+public class TodoCheckboxList extends JPanel{
 
-                }
-            }
-        });
-        checkboxes.add(checkBox);
-    }
-
-    public void printCheckboxes(JPanel panel){
+    protected TodoCheckList checkboxes;
+    protected Font font1;
+    protected Font font2;
+    public TodoCheckboxList(Font font1, Font font2, TodoCheckList checkboxes){
+        super();
+        this.checkboxes = checkboxes;
+        this.font1 = font1;
+        this.font2 = font2;
         int i;
-        for (i=0; i<checkboxes.size(); i++){
-        panel.add(checkboxes.get(i));
+        for (i=0; i<checkboxes.size(); i++) {
+        JCheckBox checkbox = checkboxes.get(i);
+        checkbox.addItemListener((ItemEvent e) -> {
+            onItemStateChanged(e, checkbox);
+        });
+        this.setLayout(new GridLayout(0, 1));
+        this.add(checkbox);
         }
     }
-}
+
+    private void onItemStateChanged(ItemEvent e, JCheckBox checkbox) {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+                    checkboxes.remove(checkbox);
+                    checkbox.setForeground(Color.GRAY);
+                    checkbox.setFont(font1);
+                    checkboxes.add(checkbox);
+                    checkboxes.add(checkbox);
+                    checkboxes.add(checkbox);
+                } else {
+                    checkbox.setForeground(Color.BLACK);
+                    checkbox.setFont(font2);
+                }
+            }
+    }
