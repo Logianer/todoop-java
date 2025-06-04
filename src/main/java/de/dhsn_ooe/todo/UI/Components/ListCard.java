@@ -15,16 +15,16 @@ import org.kordamp.ikonli.materialdesign2.MaterialDesignO;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
 import org.kordamp.ikonli.swing.FontIcon;
 
-import com.formdev.flatlaf.FlatLaf;
+import de.dhsn_ooe.todo.Events.WindowManager;
+import de.dhsn_ooe.todo.UI.Helpers.FontManager;
+import de.dhsn_ooe.todo.UI.Views.TodoListSingle;
 
 public class ListCard extends JPanel {
 
     private String title;
-    protected FlatLaf theme;
-    public ListCard(String title, FlatLaf theme) {
+    public ListCard(String title) {
         super();
         this.title = title;
-        this.theme = theme;
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -57,14 +57,14 @@ public class ListCard extends JPanel {
         btnC.insets = new Insets(0, 4, 0, 2);
         btnC.gridy = 0;
         JButton deleteButton = new JButton();
-        deleteButton.setIcon(FontIcon.of(MaterialDesignD.DELETE, 16, theme.getDefaults().getColor("Label.foreground")));
+        deleteButton.setIcon(FontIcon.of(MaterialDesignD.DELETE, 16, FontManager.getDefaults().getColor("Label.foreground")));
         deleteButton.setToolTipText("Liste löschen");
         JButton editButton = new JButton();
-        editButton.setIcon(FontIcon.of(MaterialDesignP.PENCIL,16,theme.getDefaults().getColor("Label.foreground")));
+        editButton.setIcon(FontIcon.of(MaterialDesignP.PENCIL,16,FontManager.getDefaults().getColor("Label.foreground")));
         editButton.setToolTipText("Titel bearbeiten");
 
         JButton openButton = new JButton();
-        openButton.setIcon(FontIcon.of(MaterialDesignO.OPEN_IN_NEW, 16,theme.getDefaults().getColor("Label.foreground")));
+        openButton.setIcon(FontIcon.of(MaterialDesignO.OPEN_IN_NEW, 16,FontManager.getDefaults().getColor("Label.foreground")));
         openButton.setToolTipText("Liste öffnen");
 
 
@@ -74,6 +74,8 @@ public class ListCard extends JPanel {
         bar.add(editButton, btnC);
         bar.add(deleteButton, btnC);
 
+        openButton.addActionListener(e -> WindowManager.changeWindow(new TodoListSingle()));
+        deleteButton.addActionListener(e->WindowManager.repaintWindow());
         return bar;
     }
 }

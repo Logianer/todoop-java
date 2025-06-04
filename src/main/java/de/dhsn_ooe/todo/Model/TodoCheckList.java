@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import de.dhsn_ooe.todo.Events.TodoCheckListListener;
 import de.dhsn_ooe.todo.Exception.TodoItemNotFoundException;
 
 public class TodoCheckList extends AbstractTodoList implements Collection<TodoItem> {

@@ -9,19 +9,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import com.formdev.flatlaf.FlatLaf;
-
 import de.dhsn_ooe.todo.UI.Components.Title;
 import de.dhsn_ooe.todo.UI.Views.TodoListList;
 
 public class Dashboard extends JPanel {
 
-    FlatLaf theme;
-    public Dashboard(FlatLaf theme) {
+    public Dashboard() {
         super();
-        this.theme = theme;
         JLabel title = new Title("Todo-App");
-        TodoListList list = new TodoListList(theme);
+        TodoListList list = new TodoListList();
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;

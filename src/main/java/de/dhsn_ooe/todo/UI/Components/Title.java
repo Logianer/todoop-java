@@ -2,11 +2,12 @@ package de.dhsn_ooe.todo.UI.Components;
 
 import java.awt.Font;
 import java.awt.font.TextAttribute;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import de.dhsn_ooe.todo.UI.Helpers.FontManager;
 
 /**
  * A Title is a centered label that is bold and underlined.
@@ -18,13 +19,10 @@ import javax.swing.SwingConstants;
 public class Title extends JLabel {
     public Title(String text, int fontSize) {
         super();
-        Font labelFont = this.getFont();
-        Map<TextAttribute, Object> attributes = new HashMap<>(labelFont.getAttributes());
-        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-        attributes.put(TextAttribute.SIZE, fontSize);
-        attributes.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_BOLD);
+        Font titleFont = FontManager.modifyDefaultFont(Map.of(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON,TextAttribute.SIZE, fontSize,TextAttribute.WEIGHT, TextAttribute.WEIGHT_BOLD));
+        
         this.setHorizontalAlignment(SwingConstants.CENTER);
-        this.setFont(labelFont.deriveFont(attributes));
+        this.setFont(titleFont);
         this.setText(text);
     }
     /**

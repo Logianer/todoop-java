@@ -7,24 +7,20 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.JPanel;
 
-import com.formdev.flatlaf.FlatLaf;
-
 import de.dhsn_ooe.todo.UI.Components.ListCard;
 
 public class TodoListList extends JPanel {
 
     protected GridLayout layout = new GridLayout(0, 3, 10,10);
-    protected FlatLaf theme;
-    public TodoListList(FlatLaf theme) {
+    public TodoListList() {
         super();
-        this.theme = theme;
         this.setLayout(layout);
-        
+
         for (int i = 0; i < 10; i++) {
-            ListCard button = new ListCard("Liste " + i, theme);
+            ListCard card = new ListCard("Liste " + i);
             // defaultC.gridx = (i % 3);
-            button.setPreferredSize(new Dimension(200, 150));
-            this.add(button);
+            card.setPreferredSize(new Dimension(200, 150));
+            this.add(card);
         }
 
         this.addComponentListener(new ComponentAdapter() {
