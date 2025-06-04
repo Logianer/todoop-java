@@ -3,6 +3,10 @@ package de.dhsn_ooe.todo.UI.Components;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.ContainerListener;
 import java.awt.event.ItemEvent;
 import java.awt.font.TextAttribute;
 import java.util.ArrayList;
@@ -12,7 +16,6 @@ import java.util.Map;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoItem;
@@ -25,24 +28,25 @@ public class TodoCheckboxList extends JPanel {
     public TodoCheckboxList(TodoCheckList checkboxes) {
         super();
         this.checkboxes = checkboxes;
-        this.setLayout(new GridLayout(0,1));
+        this.setLayout(new GridLayout(0, 1));
         paintButtons();
     }
 
     public void paintButtons() {
-        Font doneFontStyle = FontManager.modifyDefaultFont(Map.of(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON));
+        Font doneFontStyle = FontManager
+                .modifyDefaultFont(Map.of(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON));
         List<TodoItem> selectedItems = new ArrayList<>();
         for (TodoItem item : checkboxes) {
             if (item.getState() == true) {
                 selectedItems.add(item);
             } else {
-                JCheckBox checkbox = new JCheckBox(item.getAutowrappedString(60));
+                JCheckBox checkbox = new JCheckBox("<html>"+item.getStringContent() + "</html>");
                 checkbox.addItemListener(e -> onItemStateChanged(e, item));
                 this.add(checkbox);
             }
         }
         for (TodoItem item : selectedItems) {
-            JCheckBox checkbox = new JCheckBox(item.getAutowrappedString(60));
+            JCheckBox checkbox = new JCheckBox("<html><s>"+item.getStringContent() + "</s></html>");
             checkbox.setSelected(true);
             checkbox.setForeground(FontManager.getDefaults().getColor("textInactiveText"));
             checkbox.setFont(doneFontStyle);
