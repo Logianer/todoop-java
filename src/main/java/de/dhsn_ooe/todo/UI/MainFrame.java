@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import de.dhsn_ooe.todo.Events.WindowManager;
-import de.dhsn_ooe.todo.UI.Helpers.FontManager;
+import de.dhsn_ooe.todo.UI.Helpers.ThemeManager;
 
 /**
  * class that represents the main frame of the app
@@ -31,7 +31,7 @@ public class MainFrame extends JFrame {
     public MainFrame() {
         super();
         FlatLightLaf.setup();
-        FontManager.setTheme(new FlatLightLaf());
+        ThemeManager.setTheme(new FlatLightLaf());
         this.setSize(800, 600);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.child = new Dashboard();

@@ -11,10 +11,10 @@ import org.kordamp.ikonli.swing.FontIcon;
 import de.dhsn_ooe.todo.Events.WindowManager;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoItem;
+import de.dhsn_ooe.todo.UI.Dashboard;
 import de.dhsn_ooe.todo.UI.Components.Title;
 import de.dhsn_ooe.todo.UI.Components.TodoCheckboxList;
-import de.dhsn_ooe.todo.UI.Dashboard;
-import de.dhsn_ooe.todo.UI.Helpers.FontManager;
+import de.dhsn_ooe.todo.UI.Helpers.ThemeManager;
 
 /**
  * class that represents a single list that can be opened from the main menu
@@ -61,7 +61,7 @@ public class TodoListSingle extends JPanel {
         JButton button = new JButton();
         Title title = new Title("Liste 1", 15);
         panel.setLayout(new BorderLayout());
-        button.setIcon(FontIcon.of(MaterialDesignA.ARROW_LEFT, 16, FontManager.getDefaults().getColor("Label.foreground")));
+        button.setIcon(FontIcon.of(MaterialDesignA.ARROW_LEFT, 16, ThemeManager.getDefaults().getColor("Label.foreground")));
         button.addActionListener(e -> WindowManager.changeWindow(new Dashboard()));
 
         panel.add(title, BorderLayout.CENTER);

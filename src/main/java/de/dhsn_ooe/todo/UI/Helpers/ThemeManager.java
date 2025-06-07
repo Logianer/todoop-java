@@ -9,13 +9,7 @@ import javax.swing.UIDefaults;
 
 import com.formdev.flatlaf.FlatLaf;
 
-/**
- * class that manages the fonts of all the lists 
- */
-public class FontManager {
-    /**
-     * theme of the application
-     */
+public class ThemeManager {
     protected static FlatLaf theme;
 
     /**
@@ -23,7 +17,7 @@ public class FontManager {
      * @param theme theme that should be set
      */
     public static void setTheme(FlatLaf theme) {
-        FontManager.theme = theme;
+        ThemeManager.theme = theme;
     }
 
     /**

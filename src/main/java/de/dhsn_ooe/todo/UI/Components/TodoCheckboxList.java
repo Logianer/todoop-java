@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoItem;
-import de.dhsn_ooe.todo.UI.Helpers.FontManager;
+import de.dhsn_ooe.todo.UI.Helpers.ThemeManager;
 
 /**
  * class that represents a list of checkboxes on the UI of the app
@@ -43,8 +43,6 @@ public class TodoCheckboxList extends JPanel {
      * adds checkboxes to the panel with the desired layout depending on the state of the item
      */
     public void paintButtons() {
-        Font doneFontStyle = FontManager
-                .modifyDefaultFont(Map.of(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON));
         List<TodoItem> selectedItems = new ArrayList<>();
         for (TodoItem item : checkboxes) {
             if (item.getState() == true) {
@@ -58,8 +56,7 @@ public class TodoCheckboxList extends JPanel {
         for (TodoItem item : selectedItems) {
             JCheckBox checkbox = new JCheckBox("<html><s>"+item.getStringContent() + "</s></html>");
             checkbox.setSelected(true);
-            checkbox.setForeground(FontManager.getDefaults().getColor("textInactiveText"));
-            checkbox.setFont(doneFontStyle);
+            checkbox.setForeground(ThemeManager.getDefaults().getColor("textInactiveText"));
             checkbox.setPreferredSize(new Dimension(200, 100));
 
             checkbox.addItemListener(e -> onItemStateChanged(e, item));
