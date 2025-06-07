@@ -8,24 +8,46 @@ import java.util.List;
 import de.dhsn_ooe.todo.Events.TodoCheckListListener;
 import de.dhsn_ooe.todo.Exception.TodoItemNotFoundException;
 
+
+/**
+ * class the represents a CheckList as part of the TodoList
+ */
 public class TodoCheckList extends AbstractTodoList implements Collection<TodoItem> {
 
     private Collection<TodoItem> checkItems;
     private List<TodoCheckListListener> listeners = new ArrayList<>();
 
+    /**
+     * Constructor that creates a TodoCheckList with an empty list of checkItems
+     */
     public TodoCheckList() {
         checkItems = new ArrayList<>();
     }
 
+    /**
+     * Constructor that creates the title for the TodoCheckList
+     * @param title title of the CheckList
+     */
     public TodoCheckList(String title) {
         this();
         this.setTitle(title);
     }
 
+    /**
+    * gets all the checkItems of a TodoCheckList
+    * @return checkItems of the list
+    */
     public Collection<TodoItem> getCheckItems() {
         return checkItems;
     }
 
+
+    /**
+     * changes the state of an item of the list 
+     * @param id id of the item that should be changed
+     * @return new state of the item
+     * @throws TodoItemNotFoundException exeption for no item for the given id
+     */
     public boolean toggleCheckItemById(long id) throws TodoItemNotFoundException {
         for (TodoItem item : checkItems) {
             if (item.getId() == id) {
@@ -35,14 +57,26 @@ public class TodoCheckList extends AbstractTodoList implements Collection<TodoIt
         throw new TodoItemNotFoundException(id);
     }
 
+    /**
+     * adds listeners to the list
+     * @param listener listener for the items of the check list
+     */
     public void addListener(TodoCheckListListener listener) {
         listeners.add(listener);
     }
 
+    /**
+     * removes listeners from the list
+     * @param listener listener for the items of the check list
+     */
     public void removeListener(TodoCheckListListener listener) {
         listeners.remove(listener);
     }
 
+    /**
+     * notifys listeners if changes took place
+     * @param list list the event should take effect on 
+     */
     public void fireEvent(TodoCheckList list) {
         for (TodoCheckListListener listener : listeners) {
             listener.listChanged(list);

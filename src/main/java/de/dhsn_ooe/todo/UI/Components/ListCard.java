@@ -19,9 +19,21 @@ import de.dhsn_ooe.todo.Events.WindowManager;
 import de.dhsn_ooe.todo.UI.Helpers.FontManager;
 import de.dhsn_ooe.todo.UI.Views.TodoListSingle;
 
+
+/**
+ * class that repesents a card of a list at the home menu of the app 
+ */
 public class ListCard extends JPanel {
 
+    /**
+     * title of the card
+     */
     private String title;
+
+    /**
+     * constructs a card with its layout and title
+     * @param title title of the card
+     */
     public ListCard(String title) {
         super();
         this.title = title;
@@ -42,6 +54,10 @@ public class ListCard extends JPanel {
         
     }
 
+    /**
+     * creates the action bar (open, edit, delete) for a card
+     * @return created bar 
+     */
     private JPanel createActionBar() {
         JPanel bar = new JPanel();
         bar.setLayout(new GridBagLayout());

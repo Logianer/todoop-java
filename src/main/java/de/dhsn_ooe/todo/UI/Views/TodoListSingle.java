@@ -11,15 +11,24 @@ import org.kordamp.ikonli.swing.FontIcon;
 import de.dhsn_ooe.todo.Events.WindowManager;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoItem;
-import de.dhsn_ooe.todo.UI.Dashboard;
 import de.dhsn_ooe.todo.UI.Components.Title;
 import de.dhsn_ooe.todo.UI.Components.TodoCheckboxList;
+import de.dhsn_ooe.todo.UI.Dashboard;
 import de.dhsn_ooe.todo.UI.Helpers.FontManager;
 
+/**
+ * class that represents a single list that can be opened from the main menu
+ */
 public class TodoListSingle extends JPanel {
 
+    /**
+     * layout of the list
+     */
     protected BorderLayout layout = new BorderLayout();
 
+    /**
+     * constructs a list with the given elements, a top bar and the layout of the panel
+     */
     public TodoListSingle() {
         super();
         this.setLayout(layout);
@@ -43,6 +52,10 @@ public class TodoListSingle extends JPanel {
         this.add(check, BorderLayout.CENTER);
     }
 
+    /**
+     * creates the top bar of the list with a title an a back button
+     * @return panel with all elements
+     */
     private JPanel createTopBar() {
         JPanel panel = new JPanel();
         JButton button = new JButton();

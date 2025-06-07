@@ -12,8 +12,16 @@ import javax.swing.JScrollPane;
 import de.dhsn_ooe.todo.UI.Components.Title;
 import de.dhsn_ooe.todo.UI.Views.TodoListList;
 
+/**
+ * class that represents the dashboard of the app
+ * creates the title and the layout of the dashboard
+ * creates a scrollbar
+ */
 public class Dashboard extends JPanel {
 
+    /**
+     * constructs the dashboard with its elements
+     */
     public Dashboard() {
         super();
         JLabel title = new Title("Todo-App");

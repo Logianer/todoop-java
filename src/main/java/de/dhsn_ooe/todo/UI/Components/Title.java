@@ -17,6 +17,12 @@ import de.dhsn_ooe.todo.UI.Helpers.FontManager;
  * of the current window in less than 70 characters.
  */
 public class Title extends JLabel {
+
+    /**
+     * constructs the title
+     * @param text title
+     * @param fontSize Size of the title
+     */
     public Title(String text, int fontSize) {
         super();
         Font titleFont = FontManager.modifyDefaultFont(Map.of(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON,TextAttribute.SIZE, fontSize,TextAttribute.WEIGHT, TextAttribute.WEIGHT_BOLD));
@@ -25,9 +31,10 @@ public class Title extends JLabel {
         this.setFont(titleFont);
         this.setText(text);
     }
+    
     /**
      * Use a default of 24pt as the font size.
-     * @param text
+     * @param text title 
      */
     public Title(String text) {
         this(text, 24);

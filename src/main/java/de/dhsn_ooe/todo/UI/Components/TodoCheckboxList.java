@@ -3,17 +3,12 @@ package de.dhsn_ooe.todo.UI.Components;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.ContainerListener;
 import java.awt.event.ItemEvent;
 import java.awt.font.TextAttribute;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
@@ -21,10 +16,22 @@ import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoItem;
 import de.dhsn_ooe.todo.UI.Helpers.FontManager;
 
+/**
+ * class that represents a list of checkboxes on the UI of the app
+ * The checkboxes can be clicked an will move to the bottom of the displayed list an the text will change its color and gets striked through
+ * When unchecked the checkbox will move to the original spot of the list
+ */
 public class TodoCheckboxList extends JPanel {
 
+    /**
+     * list of the checkboxes
+     */
     protected TodoCheckList checkboxes;
 
+    /**
+     * constructs a TodoCheckBox list and prints all the given checkboxes on the panel with the desired layout
+     * @param checkboxes chechboxes that should be displayed on the panel
+     */
     public TodoCheckboxList(TodoCheckList checkboxes) {
         super();
         this.checkboxes = checkboxes;
@@ -32,6 +39,9 @@ public class TodoCheckboxList extends JPanel {
         paintButtons();
     }
 
+    /**
+     * adds checkboxes to the panel with the desired layout depending on the state of the item
+     */
     public void paintButtons() {
         Font doneFontStyle = FontManager
                 .modifyDefaultFont(Map.of(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON));
@@ -57,6 +67,10 @@ public class TodoCheckboxList extends JPanel {
         }
     }
 
+
+    /**
+     * removes all the buttons from the panel and repaints them
+     */
     public void repaintButtons() {
         this.removeAll();
         this.paintButtons();
@@ -64,6 +78,11 @@ public class TodoCheckboxList extends JPanel {
         this.repaint();
     }
 
+    /**
+     * repaints the window if a item was changed (checkbox checked/unchecked/removed/added)
+     * @param e event that occured
+     * @param item item that the event occured on
+     */
     private void onItemStateChanged(ItemEvent e, TodoItem item) {
         item.setState(e.getStateChange() == ItemEvent.SELECTED);
         repaintButtons();
