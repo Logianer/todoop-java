@@ -16,6 +16,7 @@ import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
 import org.kordamp.ikonli.swing.FontIcon;
 
 import de.dhsn_ooe.todo.Events.WindowManager;
+import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.UI.Helpers.ThemeManager;
 import de.dhsn_ooe.todo.UI.Views.TodoListSingle;
 
@@ -29,14 +30,16 @@ public class ListCard extends JPanel {
      * title of the card
      */
     private String title;
+    private int listId;
 
     /**
      * constructs a card with its layout and title
      * @param title title of the card
      */
-    public ListCard(String title) {
+    public ListCard(TodoCheckList list) {
         super();
-        this.title = title;
+        this.title = list.getTitle();
+        this.listId = list.getId();
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -90,7 +93,7 @@ public class ListCard extends JPanel {
         bar.add(editButton, btnC);
         bar.add(deleteButton, btnC);
 
-        openButton.addActionListener(e -> WindowManager.changeWindow(new TodoListSingle()));
+        openButton.addActionListener(e -> WindowManager.changeWindow(new TodoListSingle(this.listId)));
         editButton.addActionListener(e -> {
             new TitleInputWindow();
         });

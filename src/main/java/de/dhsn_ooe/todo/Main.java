@@ -1,5 +1,6 @@
 package de.dhsn_ooe.todo;
 
+import de.dhsn_ooe.todo.Controller.SQLiteDB;
 import de.dhsn_ooe.todo.UI.MainFrame;
 
 /**
@@ -8,9 +9,11 @@ import de.dhsn_ooe.todo.UI.MainFrame;
 public class Main {
         /**
          * The starting point of the application
+         * 
          * @param args ..
          */
         public static void main(String[] args) {
+                SQLiteDB.init();
                 new MainFrame();
         }
 }

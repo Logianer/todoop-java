@@ -5,7 +5,7 @@ package de.dhsn_ooe.todo.Model;
  */
 public abstract class AbstractTodoList {
 
-    private Long id;
+    private int id;
     private String title;
 
     /**
@@ -41,7 +41,13 @@ public abstract class AbstractTodoList {
      * gets the id of the list
      * @return id of the AbstractTodoList
      */
-    public long getId() {
+    public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        if (this.id == 0) {
+            this.id = id;
+        }
     }
 }

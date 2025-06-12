@@ -4,9 +4,13 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.sql.SQLException;
+import java.util.List;
 
 import javax.swing.JPanel;
 
+import de.dhsn_ooe.todo.Controller.TodoCheckListController;
+import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.UI.Components.ListCard;
 
 /**
@@ -26,13 +30,18 @@ public class TodoListList extends JPanel {
     public TodoListList() {
         super();
         this.setLayout(layout);
-
-        for (int i = 0; i < 10; i++) {
-            ListCard card = new ListCard("Liste " + i);
-            // defaultC.gridx = (i % 3);
-            card.setPreferredSize(new Dimension(200, 150));
-            this.add(card);
+        
+        try {
+            List<TodoCheckList> lists = new TodoCheckListController().getAll();
+            for (TodoCheckList list : lists) {
+                ListCard card = new ListCard(list);
+                card.setPreferredSize(new Dimension(200, 150));
+                this.add(card);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.err);
         }
+
 
         this.addComponentListener(new ComponentAdapter() {
             @Override

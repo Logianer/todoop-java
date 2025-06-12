@@ -1,6 +1,7 @@
 package de.dhsn_ooe.todo.UI.Views;
 
 import java.awt.BorderLayout;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -9,7 +10,10 @@ import org.kordamp.ikonli.materialdesign2.MaterialDesignA;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
 import org.kordamp.ikonli.swing.FontIcon;
 
+import de.dhsn_ooe.todo.Controller.TodoCheckListController;
+import de.dhsn_ooe.todo.Controller.TodoItemController;
 import de.dhsn_ooe.todo.Events.WindowManager;
+import de.dhsn_ooe.todo.Exception.ItemNotFoundException;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoItem;
 import de.dhsn_ooe.todo.UI.Components.Title;
@@ -27,28 +31,19 @@ public class TodoListSingle extends JPanel {
      * layout of the list
      */
     protected BorderLayout layout = new BorderLayout();
-
+    private TodoCheckList list;
     /**
      * constructs a list with the given elements, a top bar and the layout of the panel
      */
-    public TodoListSingle() {
+    public TodoListSingle(int listId) {
         super();
         this.setLayout(layout);
-
-        TodoCheckList tasks = new TodoCheckList();
-        TodoItem task1 = new TodoItem();
-        TodoItem task2 = new TodoItem();
-        TodoItem task3 = new TodoItem();
-        TodoItem task4 = new TodoItem();
-        task1.setStringContent("Aufgabe 1");
-        task2.setStringContent("Aufgabe 2");
-        task3.setStringContent("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
-        task4.setStringContent("Aufgabe 7");
-        tasks.add(task1);
-        tasks.add(task2);
-        tasks.add(task3);
-        tasks.add(task4);
-        TodoCheckboxList check = new TodoCheckboxList(tasks);
+        try {
+            this.list = new TodoCheckListController().getById(listId);
+        } catch (ItemNotFoundException e) {
+            this.list = new TodoCheckList("NOTFOUND");
+        }
+        TodoCheckboxList check = new TodoCheckboxList(list);
         
         this.add(createTopBar(), BorderLayout.NORTH);
         this.add(check, BorderLayout.CENTER);
@@ -62,14 +57,12 @@ public class TodoListSingle extends JPanel {
         JPanel panel = new JPanel();
         JButton button1 = new JButton();
         JButton button2 = new JButton();
-        Title title = new Title("Liste 1", 15);
+        Title title = new Title(list.getTitle(), 15);
         panel.setLayout(new BorderLayout());
         button1.setIcon(FontIcon.of(MaterialDesignA.ARROW_LEFT, 16, ThemeManager.getDefaults().getColor("Label.foreground")));
         button1.addActionListener(e -> WindowManager.changeWindow(new Dashboard()));
         button2.setIcon(FontIcon.of(MaterialDesignP.PLUS, 16, ThemeManager.getDefaults().getColor("Label.foreground")));
-        button2.addActionListener(e -> {
-            TodoInputWindow todoInputWindow = new TodoInputWindow();
-        });
+        button2.addActionListener(e -> new TodoInputWindow());
 
         panel.add(title, BorderLayout.CENTER);
         panel.add(button1, BorderLayout.WEST);
