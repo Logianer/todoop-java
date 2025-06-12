@@ -1,17 +1,19 @@
 package de.dhsn_ooe.todo;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import de.dhsn_ooe.todo.Controller.SQLiteDB;
+import de.dhsn_ooe.todo.UI.MainFrame;
 
 /**
  * The Main class
  */
-@SpringBootApplication
 public class Main {
-    /**
-     * The starting point of the application
-     */
-    public static void main(String[] args) {
-				SpringApplication.run(Main.class, args);
-    }
+        /**
+         * The starting point of the application
+         * 
+         * @param args ..
+         */
+        public static void main(String[] args) {
+                SQLiteDB.init();
+                new MainFrame();
+        }
 }

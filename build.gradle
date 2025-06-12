@@ -5,9 +5,8 @@
  * Learn more about Gradle by exploring our Samples at https://docs.gradle.org/8.13/samples
  */
 plugins {
-    id "java"
- 		id 'org.springframework.boot' version '3.4.5'
-		id 'io.spring.dependency-management' version '1.1.7'
+    id "application"
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 repositories {
@@ -15,11 +14,11 @@ repositories {
 }
 
 dependencies {
-	runtimeOnly 'com.h2database:h2'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation "com.formdev:flatlaf:3.6"
+    implementation "com.formdev:flatlaf-intellij-themes:3.6"
+    implementation "org.kordamp.ikonli:ikonli-swing:12.4.0"
+    implementation "org.kordamp.ikonli:ikonli-materialdesign2-pack:12.4.0"
+    implementation "org.xerial:sqlite-jdbc:3.49.1.0"
 }
 
 repositories {
@@ -30,4 +29,8 @@ jar {
     manifest {
         attributes 'Main-Class': 'de.dhsn_ooe.todo.Main'
     }
+}
+
+application {
+    mainClass = 'de.dhsn_ooe.todo.Main'
 }

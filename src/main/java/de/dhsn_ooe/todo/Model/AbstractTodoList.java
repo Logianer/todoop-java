@@ -1,34 +1,53 @@
 package de.dhsn_ooe.todo.Model;
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.Table;
-
-@Inheritance
-@Entity
-@Table(name = "list")
+/**
+ * Class that represents the whole Todolist
+ */
 public abstract class AbstractTodoList {
 
-    private @Id
-    @GeneratedValue Long id;
+    private int id;
     private String title;
-    
+
+    /**
+     * Constructs an empty Object from the class AbstractTodoList
+     */
     protected AbstractTodoList() {}
-    
+
+    /**
+     * Constructs an Object from the class AbstractTodoList with a title
+     * @param title title of the List
+     */
     public AbstractTodoList(String title) {
         this.title = title;
     }
 
+    /**
+     * gets the title of the list and returns it
+     * @return title of the AbstractTodoList
+     */
     public String getTitle() {
         return title;
     }
+
+    /**
+     * sets the title of the list
+     * @param title title of the List
+     */
     public void setTitle(String title) {
         this.title = title;
     }
-    public long getId() {
+
+    /**
+     * gets the id of the list
+     * @return id of the AbstractTodoList
+     */
+    public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        if (this.id == 0) {
+            this.id = id;
+        }
     }
 }
