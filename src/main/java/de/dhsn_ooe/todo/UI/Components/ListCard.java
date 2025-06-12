@@ -15,7 +15,9 @@ import org.kordamp.ikonli.materialdesign2.MaterialDesignO;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
 import org.kordamp.ikonli.swing.FontIcon;
 
+import de.dhsn_ooe.todo.Controller.TodoCheckListController;
 import de.dhsn_ooe.todo.Events.WindowManager;
+import de.dhsn_ooe.todo.Exception.ItemNotFoundException;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.UI.Helpers.ThemeManager;
 import de.dhsn_ooe.todo.UI.Views.TodoListSingle;
@@ -95,7 +97,11 @@ public class ListCard extends JPanel {
 
         openButton.addActionListener(e -> WindowManager.changeWindow(new TodoListSingle(this.listId)));
         editButton.addActionListener(e -> {
-            new TitleInputWindow();
+            try {
+                new TitleInputWindow(new TodoCheckListController().getById(this.listId));
+            } catch (ItemNotFoundException err) {
+                err.printStackTrace(System.err);
+            }
         });
         deleteButton.addActionListener(e -> WindowManager.repaintWindow());
         return bar;

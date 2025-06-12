@@ -45,6 +45,7 @@ public class MainFrame extends JFrame {
             repaint();
         };
         cp.add(this.child);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 }

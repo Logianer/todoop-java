@@ -50,9 +50,8 @@ public class TodoCheckListController
     }
 
     /**
-     * notifys listeners if changes took place
+     * notifies listeners if changes took place
      * 
-     * @param list list the event should take effect on
      */
     public void fireEvent() {
         for (TodoCheckListListener listener : listeners) {
@@ -77,14 +76,32 @@ public class TodoCheckListController
 
     @Override
     public void update(TodoCheckList object, int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        try {
+            PreparedStatement query = SQLiteDB.conn
+                    .prepareStatement("UPDATE todo_list set title = ? where list_id = ?");
+            query.setString(1, object.getTitle());
+            query.setInt(2, id);
+            query.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(System.err);
+        } finally {
+            this.fireEvent();
+        }
     }
 
     @Override
     public boolean delete(TodoCheckList object) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        try {
+            PreparedStatement query = SQLiteDB.conn
+                    .prepareStatement("DELETE FROM todo_list where list_id = ?");
+            query.setInt(1, object.getId());
+            query.executeUpdate();
+            this.fireEvent();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace(System.err);
+            return false;
+        }
     }
 
     @Override
@@ -104,7 +121,7 @@ public class TodoCheckListController
     }
 
     @Override
-    public List<TodoItem> getRelatedItems(TodoCheckList object) throws SQLException{
+    public List<TodoItem> getRelatedItems(TodoCheckList object) throws SQLException {
         List<TodoItem> items = new ArrayList<>();
         PreparedStatement query = SQLiteDB.conn.prepareStatement("SELECT * from todo_item where list_id = ?");
         query.setInt(1, object.getId());

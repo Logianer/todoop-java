@@ -47,7 +47,7 @@ public class TodoItem {
     /**
      * gets the state of the item
      * 
-     * @return state of the item (true/false)
+     * @return state of the item (@code{true} means it is checked and finished)
      */
     public boolean getState() {
         return doneState;
