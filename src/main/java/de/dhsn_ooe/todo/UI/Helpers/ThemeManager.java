@@ -9,7 +9,14 @@ import javax.swing.UIDefaults;
 
 import com.formdev.flatlaf.FlatLaf;
 
+/**
+ * class that manages the overall theme of the app (fonts etc.)
+ */
 public class ThemeManager {
+
+    /**
+     * theme
+     */
     protected static FlatLaf theme;
 
     /**
