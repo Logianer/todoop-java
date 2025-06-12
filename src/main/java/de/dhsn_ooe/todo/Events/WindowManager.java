@@ -20,6 +20,10 @@ public class WindowManager {
         dispatcher.onWindowChanged(window);
     }
 
+    public static void createNewWindow(JComponent window){
+        dispatcher.onWindowChanged(window);
+    }
+
     /**
      * repaints the window on demand
      */

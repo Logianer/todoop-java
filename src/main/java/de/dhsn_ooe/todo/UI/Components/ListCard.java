@@ -91,7 +91,10 @@ public class ListCard extends JPanel {
         bar.add(deleteButton, btnC);
 
         openButton.addActionListener(e -> WindowManager.changeWindow(new TodoListSingle()));
-        deleteButton.addActionListener(e->WindowManager.repaintWindow());
+        editButton.addActionListener(e -> {
+            new TitleInputWindow();
+        });
+        deleteButton.addActionListener(e -> WindowManager.repaintWindow());
         return bar;
     }
 }

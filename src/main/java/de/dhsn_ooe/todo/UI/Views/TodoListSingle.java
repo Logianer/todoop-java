@@ -6,14 +6,16 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import org.kordamp.ikonli.materialdesign2.MaterialDesignA;
+import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
 import org.kordamp.ikonli.swing.FontIcon;
 
 import de.dhsn_ooe.todo.Events.WindowManager;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoItem;
-import de.dhsn_ooe.todo.UI.Dashboard;
 import de.dhsn_ooe.todo.UI.Components.Title;
 import de.dhsn_ooe.todo.UI.Components.TodoCheckboxList;
+import de.dhsn_ooe.todo.UI.Components.TodoInputWindow;
+import de.dhsn_ooe.todo.UI.Dashboard;
 import de.dhsn_ooe.todo.UI.Helpers.ThemeManager;
 
 /**
@@ -58,14 +60,20 @@ public class TodoListSingle extends JPanel {
      */
     private JPanel createTopBar() {
         JPanel panel = new JPanel();
-        JButton button = new JButton();
+        JButton button1 = new JButton();
+        JButton button2 = new JButton();
         Title title = new Title("Liste 1", 15);
         panel.setLayout(new BorderLayout());
-        button.setIcon(FontIcon.of(MaterialDesignA.ARROW_LEFT, 16, ThemeManager.getDefaults().getColor("Label.foreground")));
-        button.addActionListener(e -> WindowManager.changeWindow(new Dashboard()));
+        button1.setIcon(FontIcon.of(MaterialDesignA.ARROW_LEFT, 16, ThemeManager.getDefaults().getColor("Label.foreground")));
+        button1.addActionListener(e -> WindowManager.changeWindow(new Dashboard()));
+        button2.setIcon(FontIcon.of(MaterialDesignP.PLUS, 16, ThemeManager.getDefaults().getColor("Label.foreground")));
+        button2.addActionListener(e -> {
+            TodoInputWindow todoInputWindow = new TodoInputWindow();
+        });
 
         panel.add(title, BorderLayout.CENTER);
-        panel.add(button, BorderLayout.WEST);
+        panel.add(button1, BorderLayout.WEST);
+        panel.add(button2, BorderLayout.EAST);
         return panel;
     }
 }

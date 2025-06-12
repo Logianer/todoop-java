@@ -1,13 +1,10 @@
 package de.dhsn_ooe.todo.UI.Components;
 
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
-import java.awt.font.TextAttribute;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
@@ -36,13 +33,13 @@ public class TodoCheckboxList extends JPanel {
         super();
         this.checkboxes = checkboxes;
         this.setLayout(new GridLayout(0, 1));
-        paintButtons();
+        this.paintButtons();
     }
 
     /**
      * adds checkboxes to the panel with the desired layout depending on the state of the item
      */
-    public void paintButtons() {
+    public final void paintButtons() {
         List<TodoItem> selectedItems = new ArrayList<>();
         for (TodoItem item : checkboxes) {
             if (item.getState() == true) {
