@@ -1,0 +1,201 @@
+---
+title: TODO-App
+---
+classDiagram
+    direction LR
+    CRUDController <|-- TodoCheckListController : implements
+    RelationController <|-- TodoCheckListController : implements
+    CRUDController <|-- TodoItemController : implements
+    namespace Controller {
+        class CRUDController~E~ {
+            <<interface>>
+            +create(E object) int
+            +getById(int id) E
+            +getAll() List~E~
+            +update(E object, int id)
+            +delete(E object) boolean
+        }
+        class RelationController~E, T~ {
+            <<interface>>
+            +getRelatedItems(E object) List~T~
+        }
+        class SQLiteDB {
+            +Connection conn$
+            +init()$
+        }
+        class TodoCheckListController {
+            -List~TodoCheckListListener~ listeners;
+
+            +create(TodoCheckList object) int
+            +addListener(TodoCheckListListener listener)
+            +removeListener(TodoCheckListListener listener)
+            #fireEvent()
+            +getById(int id) TodoCheckList
+            +update(TodoCheckList object, int id)
+            +delete(TodoCheckList object) boolean
+            +getAll() List~TodoCheckList~
+            +getRelatedItems(TodoCheckList object) List~TodoItem~
+        }
+        class TodoItemController {
+            +create(TodoCheckList object) int
+            +getById(int id) TodoItem
+            +update(TodoCheckList object, int id)
+            +delete(TodoCheckList object) boolean
+            +getAll() List~TodoItem~
+        }
+    }
+    TodoCheckListListener *-- TodoCheckListController
+    class EventListener["java.util.EventListener"]
+    EventListener <|-- TodoCheckListListener
+    namespace Events {
+        class TodoCheckListListener {
+            <<interface>>
+            +listChanged(TodoCheckListController list)
+        }
+        class WindowManager {
+            +WindowManagerDispatcher dispatcher$
+            +changeWindow(JComponent window)$
+            +repaintWindow()$
+        }
+        class WindowManagerDispatcher {
+            <<interface>>
+            +onWindowChanged(JComponent event)
+        }
+    }
+    class JavaException["^java.lang.Exception"]  {
+        <<interface>>
+    }
+    JavaException <|-- ItemNotFoundException : implements
+    JavaException <|-- OrphanedRelationException : implements
+    namespace Exception {
+        class ItemNotFoundException
+        class OrphanedRelationException
+    }
+    AbstractTodoList <|-- TodoCheckList
+    AbstractTodoList <|-- TodoNote
+    TodoCheckList *-- TodoItem
+    namespace Model {
+        class AbstractTodoList {
+            <<abstract>>
+            -int id
+            -String title
+            +AbstractTodoList()
+            +getTitle() String
+            +setTitle(String title)
+            +getId() int
+            +setId(int id)
+        }
+        class TodoCheckList {
+            +TodoCheckList(String title)
+        }
+        class TodoItem {
+            -int id
+            -String stringContent
+            -boolean doneState
+            -TodoCheckList parentList
+
+            +TodoItem(TodoCheckList list)
+            +setStringContent(String stringContent)
+            +getStringContent String
+            +setState(boolean state)
+            +getState() boolean
+            +getId() int
+            +setId(int id)
+            +TodoCheckList getList()
+        }
+        class TodoNote {
+            +TodoNote(String title)
+            +getHtmlContent() String
+            +setHtmlContent(String htmlContent)
+            +getContent() String
+        }
+    }
+    class JPanel["javax.swing.JPanel"]
+    class JFrame["javax.swing.JFrame"]
+    class JPanel["javax.swing.JPanel"]
+    class JLabel["javax.swing.JLabel"]
+    JPanel <|-- Dashboard
+    JFrame <|-- MainFrame
+    JFrame <|-- InputWindow
+    JPanel <|-- ListCard
+    JLabel <|-- Title
+    InputWindow <|-- TitleInputWindow
+    InputWindow <|-- TodoInputWindow
+    JPanel <|-- TodoCheckboxList
+    TodoCheckList *-- TodoCheckboxList
+    JPanel <|-- TodoListList
+    TodoCheckList *-- TodoListSingle
+    JPanel <|-- TodoListSingle
+    namespace UI {
+        class Dashboard {
+            +Dashboard()
+        }
+        class MainFrame {
+            +Container cp
+            +JComponent child
+
+            +MainFrame()
+        }
+        class InputWindow {
+            <<abstract>>
+            #BorderLayout layout
+            #Container cp
+            #String message
+            #JComponent input
+            #String action
+            -KeyAdapter keyListener
+
+            +InputWindow(String title, String, message, String action)
+            +InputWindow(String title, String message, JComponent input, String action)
+            -createTopBar() JComponent
+            +setInputBar(JComponent input)
+            -onPressed(KeyEvent e)
+        }
+        class ListCard {
+            -String title
+            -int listId
+
+            +ListCard(TodoCheckList list)
+            -createActionBar() JPanel
+        }
+        class Title {
+            +Title(String text)
+            +Title(String text, int fontSize)
+        }
+        class TitleInputWindow {
+            +TitleInputWindow()
+        }
+        class TodoCheckboxList {
+            #TodoCheckList list
+
+            +TodoCheckboxList(TodoCheckList list)
+            +paintButtons()
+            +repaintButtons()
+            -onItemStateChanged(ItemEvent e,TodoItem item)
+        }
+        class TodoInputWindow {
+            +TodoInputWindow()
+        }
+        class ThemeManager {
+            #FlatLaf theme$
+
+            +setTheme(FlatLaf theme)$
+            +getDefaults() UIDefaults$
+            +getDefaultFont() Font$
+            +modifyDefaultFont(Map~TextAttribute, Object~ newAttributes) Font$
+        }
+        class TodoListList {
+            #GridLayout layout
+
+            +TodoListList()
+            -panelResized()
+        }
+        class TodoListSingle {
+            #BorderLayout layout
+            -TodoCheckList list
+
+            +TodoListSingle(int listId)
+            -createTopBar() JPanel
+        }
+    }
+    class Main

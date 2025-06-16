@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import de.dhsn_ooe.todo.Controller.TodoCheckListController;
+import de.dhsn_ooe.todo.Controller.TodoListController;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.UI.Components.ListCard;
 
@@ -32,7 +32,7 @@ public class TodoListList extends JPanel {
         this.setLayout(layout);
         
         try {
-            List<TodoCheckList> lists = new TodoCheckListController().getAll();
+            List<TodoCheckList> lists = new TodoListController<TodoCheckList>().getAll();
             for (TodoCheckList list : lists) {
                 ListCard card = new ListCard(list);
                 card.setPreferredSize(new Dimension(200, 150));

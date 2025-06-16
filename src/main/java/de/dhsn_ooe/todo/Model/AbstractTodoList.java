@@ -8,18 +8,11 @@ public abstract class AbstractTodoList {
     private int id;
     private String title;
 
+    public abstract int getType();
     /**
      * Constructs an empty Object from the class AbstractTodoList
      */
     protected AbstractTodoList() {}
-
-    /**
-     * Constructs an Object from the class AbstractTodoList with a title
-     * @param title title of the List
-     */
-    public AbstractTodoList(String title) {
-        this.title = title;
-    }
 
     /**
      * gets the title of the list and returns it

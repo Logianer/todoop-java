@@ -22,7 +22,7 @@ import javax.swing.SwingConstants;
 public class InputWindow extends JFrame {
 
     protected BorderLayout layout = new BorderLayout();
-    final Container cp = this.getContentPane();
+    protected final Container cp = this.getContentPane();
     protected String message;
     protected JComponent input;
     protected String action;

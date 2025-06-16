@@ -8,11 +8,6 @@ public class TodoNote extends AbstractTodoList {
     private String htmlContent;
 
     /**
-     * constructs an empty note
-     */
-    public TodoNote() {}
-
-    /**
      * constructs a note with a title
      * @param title title of the note
      */
@@ -44,4 +39,7 @@ public class TodoNote extends AbstractTodoList {
         return null;
     }
 
+    public int getType() {
+        return 2;
+    }
 }

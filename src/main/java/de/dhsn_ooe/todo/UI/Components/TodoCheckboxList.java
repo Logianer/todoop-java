@@ -10,7 +10,7 @@ import java.util.List;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
-import de.dhsn_ooe.todo.Controller.TodoCheckListController;
+import de.dhsn_ooe.todo.Controller.TodoListController;
 import de.dhsn_ooe.todo.Controller.TodoItemController;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoItem;
@@ -50,7 +50,7 @@ public class TodoCheckboxList extends JPanel {
         List<TodoItem> selectedItems = new ArrayList<>();
         List<TodoItem> items;
         try {
-            items = new TodoCheckListController().getRelatedItems(list);
+            items = new TodoListController<TodoCheckList>().getRelatedItems(list);
             for (TodoItem item : items) {
                 if (item.getState() == true) {
                     selectedItems.add(item);

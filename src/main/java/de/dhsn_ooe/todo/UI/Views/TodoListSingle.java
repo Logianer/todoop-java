@@ -8,7 +8,7 @@ import org.kordamp.ikonli.materialdesign2.MaterialDesignA;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
 import org.kordamp.ikonli.swing.FontIcon;
 
-import de.dhsn_ooe.todo.Controller.TodoCheckListController;
+import de.dhsn_ooe.todo.Controller.TodoListController;
 import de.dhsn_ooe.todo.Events.WindowManager;
 import de.dhsn_ooe.todo.Exception.ItemNotFoundException;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
@@ -35,7 +35,7 @@ public class TodoListSingle extends JPanel {
         super();
         this.setLayout(layout);
         try {
-            this.list = new TodoCheckListController().getById(listId);
+            this.list = new TodoListController<TodoCheckList>().getById(listId);
         } catch (ItemNotFoundException e) {
             this.list = new TodoCheckList("NOTFOUND");
         }

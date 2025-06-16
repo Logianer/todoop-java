@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import de.dhsn_ooe.todo.Exception.ItemNotFoundException;
 import de.dhsn_ooe.todo.Exception.OrphanedRelationException;
+import de.dhsn_ooe.todo.Model.AbstractTodoList;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoItem;
 
@@ -34,7 +35,7 @@ public class TodoItemController implements CRUDController<TodoItem> {
             PreparedStatement query = SQLiteDB.conn.prepareStatement("SELECT * from todo_item where item_id = ?");
             query.setInt(1, id);
             ResultSet result = query.executeQuery();
-            TodoCheckList list = new TodoCheckListController().getById(result.getInt("list_id"));
+            TodoCheckList list = new TodoListController().getById(result.getInt("list_id"));
             TodoItem newItem = new TodoItem(list);
             newItem.setId(id);
             newItem.setState(result.getInt("checked") == 1);
@@ -74,13 +75,11 @@ public class TodoItemController implements CRUDController<TodoItem> {
 
     @Override
     public List<TodoItem> getAll() {
-        // TODO get things right here because of the relation of Items and Lists...
         List<TodoItem> lists = new ArrayList<>();
-        ResultSet results;
         try {
-            results = SQLiteDB.conn.createStatement().executeQuery("SELECT * from todo_item");
+            ResultSet results = SQLiteDB.conn.createStatement().executeQuery("SELECT * from todo_item");
 
-            List<TodoCheckList> allLists = new TodoCheckListController().getAll();
+            List<TodoCheckList> allLists = new TodoListController().getAll();
 
             while (results.next()) {
                 int listId = results.getInt("list_id");
@@ -88,17 +87,15 @@ public class TodoItemController implements CRUDController<TodoItem> {
                         .filter(l -> l.getId() == listId)
                         .findFirst();
                 foundList.ifPresent(list -> {
-                    TodoItem newList = new TodoItem(list);
+                    TodoItem newItem = new TodoItem(list);
                     try {
-                        newList.setId(results.getInt("item_id"));
-                        newList.setStringContent(results.getString("content"));
+                        newItem.setId(results.getInt("item_id"));
+                        newItem.setStringContent(results.getString("content"));
                     } catch (SQLException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                        e.printStackTrace(System.err);
                     }
-                    lists.add(newList);
+                    lists.add(newItem);
                 });
-
             }
         } catch (SQLException e) {
             e.printStackTrace(System.err);

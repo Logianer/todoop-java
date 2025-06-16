@@ -6,22 +6,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.dhsn_ooe.todo.Events.TodoCheckListListener;
+import de.dhsn_ooe.todo.Events.TodoControllerListener;
 import de.dhsn_ooe.todo.Exception.ItemNotFoundException;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoItem;
 
-public class TodoCheckListController
+public class TodoListController
         implements CRUDController<TodoCheckList>, RelationController<TodoCheckList, TodoItem> {
 
-    private List<TodoCheckListListener> listeners = new ArrayList<>();
+    private static List<TodoControllerListener<TodoListController>> listeners = new ArrayList<>();
 
     @Override
     public int create(TodoCheckList object) throws SQLException {
         PreparedStatement query = SQLiteDB.conn
                 .prepareStatement("INSERT INTO todo_list (title, list_type) VALUES (?,?)");
         query.setString(1, object.getTitle());
-        query.setInt(2, 1);
+        query.setInt(2, object.getType());
         query.executeUpdate();
         ResultSet results = SQLiteDB.conn.createStatement().executeQuery("SELECT last_insert_rowid();");
         int id = results.getInt(1);
@@ -36,7 +36,7 @@ public class TodoCheckListController
      * 
      * @param listener listener for the items of the check list
      */
-    public void addListener(TodoCheckListListener listener) {
+    public void addListener(TodoControllerListener<TodoListController> listener) {
         listeners.add(listener);
     }
 
@@ -45,7 +45,7 @@ public class TodoCheckListController
      * 
      * @param listener listener for the items of the check list
      */
-    public void removeListener(TodoCheckListListener listener) {
+    public void removeListener(TodoControllerListener<TodoListController> listener) {
         listeners.remove(listener);
     }
 
@@ -53,8 +53,8 @@ public class TodoCheckListController
      * notifies listeners if changes took place
      * 
      */
-    public void fireEvent() {
-        for (TodoCheckListListener listener : listeners) {
+    protected void fireEvent() {
+        for (TodoControllerListener<TodoListController> listener : listeners) {
             listener.listChanged(this);
         }
     }
@@ -65,9 +65,8 @@ public class TodoCheckListController
             PreparedStatement query = SQLiteDB.conn.prepareStatement("SELECT * from todo_list where list_id = ?");
             query.setInt(1, id);
             ResultSet results = query.executeQuery();
-            TodoCheckList list = new TodoCheckList();
+            TodoCheckList list = new TodoCheckList(results.getString("title"));
             list.setId(results.getInt("list_id"));
-            list.setTitle(results.getString("title"));
             return list;
         } catch (SQLException e) {
             throw new ItemNotFoundException(id);
@@ -110,9 +109,7 @@ public class TodoCheckListController
         ResultSet results = SQLiteDB.conn.createStatement().executeQuery("SELECT * from todo_list");
 
         while (results.next()) {
-            TodoCheckList newList = new TodoCheckList();
-            newList.setId(results.getInt("list_id"));
-            newList.setTitle(results.getString("title"));
+            TodoCheckList newList = new TodoCheckList(results.getString("title"));
             lists.add(newList);
         }
 
