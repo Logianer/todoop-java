@@ -18,12 +18,12 @@ public class MainFrame extends JFrame {
     /**
      * a container of the frame
      */
-    Container cp = this.getContentPane();
+    protected Container cp = this.getContentPane();
 
     /**
      * a child component of the frame
      */
-    JComponent child;
+    protected JComponent child;
 
     /**
      * constructs the mainframe and refreshes when events a triggered
@@ -33,18 +33,22 @@ public class MainFrame extends JFrame {
         FlatLightLaf.setup();
         ThemeManager.setTheme(new FlatLightLaf());
         this.setSize(800, 600);
+        this.setTitle("Todo-App | Start");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.child = new Dashboard();
-        WindowManager.dispatcher = event -> {
-            if (event != null) {
+        child = new Dashboard();
+        WindowManager.dispatcher = (newWindow, newTitle) -> {
+            if (newWindow != null) {
                 cp.remove(child);
-                child = event;
+                child = newWindow;
                 cp.add(child);
+            }
+            if (newTitle != null) {
+                this.setTitle(newTitle);
             }
             revalidate();
             repaint();
         };
-        cp.add(this.child);
+        cp.add(child);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }

@@ -1,15 +1,52 @@
 package de.dhsn_ooe.todo.UI.Components;
 
-import javax.swing.JTextField;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-import de.dhsn_ooe.todo.Model.AbstractTodoList;
+import javax.swing.JTextField;
 
 /**
  * class that represents a input window for a title
  */
-public class TitleInputWindow extends InputWindow{
+public class TitleInputWindow extends InputWindow {
 
-    public TitleInputWindow(AbstractTodoList list) {
-        super("Titel bearbeiten","Neuen Titel für \"" +list.getTitle()+"\" eingeben.", new JTextField(list.getTitle()), "Ok");
+    protected JTextField inputField;
+
+    public TitleInputWindow() {
+        this("Name der neuen Liste eingeben:", "Hinzufügen", "");
+        setButtonEnabled(false);
+    }
+
+    public TitleInputWindow(String message, String action, String content) {
+        super("Titel bearbeiten", message, action);
+        inputField = new JTextField(content);
+        inputField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                super.keyReleased(e);
+                if (inputField.getText().isBlank()) {
+                    setButtonEnabled(false);
+                } else {
+                    setButtonEnabled(true);
+                }
+            }
+        });
+        setInputBar(inputField);
+    }
+
+    public String getTextContent() {
+        return inputField.getText();
+    }
+
+    @Override
+    protected GridBagConstraints getInputConstraints() {
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridy = 1;
+        c.weightx = 1.0;
+        c.insets = new Insets(10, 10, 10, 10);
+        return c;
     }
 }

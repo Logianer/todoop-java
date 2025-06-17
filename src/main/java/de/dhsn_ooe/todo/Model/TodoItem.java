@@ -6,10 +6,9 @@ package de.dhsn_ooe.todo.Model;
 public class TodoItem {
 
     private int id;
-    private String stringContent;
-    private boolean doneState;
+    private String stringContent = "";
+    private boolean doneState = false;
     private final TodoCheckList parentList;
-
     /**
      * constructor for a empty TodoItem
      */

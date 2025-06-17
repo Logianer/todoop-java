@@ -25,12 +25,12 @@ public class GenericDBQuery {
 
         int i = 1;
         for (Object value : args.values()) {
-            i++;
             if (value instanceof String) {
                 query.setString(i, (String) value);
             } else if (value instanceof Integer) {
                 query.setInt(i, (Integer) value);
             }
+            i++;
         }
         query.executeUpdate();
         ResultSet results = SQLiteDB.conn.createStatement().executeQuery("SELECT last_insert_rowid();");

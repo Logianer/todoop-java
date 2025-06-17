@@ -10,8 +10,10 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import de.dhsn_ooe.todo.Controller.TodoListController;
+import de.dhsn_ooe.todo.Controller.TodoNoteController;
 import de.dhsn_ooe.todo.Events.TodoControllerListener;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
+import de.dhsn_ooe.todo.Model.TodoNote;
 import de.dhsn_ooe.todo.UI.Components.ListCard;
 
 /**
@@ -23,9 +25,16 @@ public class TodoListList extends JPanel {
      * layout of the list
      */
     protected GridLayout layout = new GridLayout(0, 3, 10, 10);
-    private TodoControllerListener<TodoListController> listener = new TodoControllerListener<TodoListController>() {
+    private TodoControllerListener<TodoListController> listListener = new TodoControllerListener<TodoListController>() {
         @Override
         public void listChanged(TodoListController list) {
+            repaintLists();
+        }
+    };
+
+    private TodoControllerListener<TodoNoteController> noteListener = new TodoControllerListener<TodoNoteController>() {
+        @Override
+        public void listChanged(TodoNoteController list) {
             repaintLists();
         }
     };
@@ -38,7 +47,8 @@ public class TodoListList extends JPanel {
     public TodoListList() {
         super();
         this.setLayout(layout);
-        new TodoListController().addListener(listener);
+        new TodoListController().addListener(listListener);
+        new TodoNoteController().addListener(noteListener);
 
         paintLists();
         this.addComponentListener(new ComponentAdapter() {
@@ -52,9 +62,13 @@ public class TodoListList extends JPanel {
 
     private void paintLists() {
         List<TodoCheckList> lists = new TodoListController().getAll();
+        List<TodoNote> notes = new TodoNoteController().getAll();
         for (TodoCheckList list : lists) {
             ListCard card = new ListCard(list);
-            card.setPreferredSize(new Dimension(200, 150));
+            this.add(card);
+        }
+        for (TodoNote note : notes) {
+            ListCard card = new ListCard(note);
             this.add(card);
         }
     }
@@ -79,6 +93,7 @@ public class TodoListList extends JPanel {
     }
 
     public void onBeforeDestroy() {
-        new TodoListController().removeListener((TodoControllerListener<TodoListController>) listener);
+        new TodoListController().removeListener(listListener);
+        new TodoNoteController().removeListener(noteListener);
     }
 }

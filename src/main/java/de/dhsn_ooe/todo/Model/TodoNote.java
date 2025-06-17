@@ -5,7 +5,8 @@ package de.dhsn_ooe.todo.Model;
  */
 public class TodoNote extends AbstractTodoList {
 
-    private String htmlContent;
+    private String noteContent;
+    public static final int TYPE = 2;
 
     /**
      * constructs a note with a title
@@ -19,27 +20,19 @@ public class TodoNote extends AbstractTodoList {
      * gets the html content of the specified note
      * @return content of the note 
      */
-    public String getHtmlContent() {
-        return htmlContent;
+    public String getContent() {
+        return noteContent;
     }
 
     /**
      * sets the html content of a given note
      * @param htmlContent content that the note should have
      */
-    public void setHtmlContent(String htmlContent) {
-        this.htmlContent = htmlContent;
-    }
-
-    /**
-     * ...
-     * @return ...
-     */
-    public String getContent() {
-        return null;
+    public void setContent(String htmlContent) {
+        this.noteContent = htmlContent;
     }
 
     public int getType() {
-        return 2;
+        return TYPE;
     }
 }

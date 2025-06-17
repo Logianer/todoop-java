@@ -19,6 +19,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import de.dhsn_ooe.todo.Main;
+import de.dhsn_ooe.todo.UI.MainFrame;
+
 //title, text, backbutton
 /**
  * class that represents a general input window
@@ -68,9 +71,9 @@ public class InputWindow extends JFrame {
         cp.add(actionButton, c);
         actionButton.addKeyListener(keyListener);
         actionButton.addActionListener(l -> fireActionEvent(l));
+        this.setSize(250, 180);
         this.setMinimumSize(new Dimension(200, 200));
-        this.setSize(new Dimension(250, 180));
-        this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(Main.mainFrame);
         this.setVisible(true);
     }
 
@@ -115,7 +118,13 @@ public class InputWindow extends JFrame {
         actionButton.setEnabled(false);
         for (ActionListener listener : listeners) {
             listener.actionPerformed(e);
+
         }
         actionButton.setEnabled(true);
+    }
+
+    protected void setButtonEnabled(boolean state) {
+        if (actionButton.isEnabled() == state) return;
+        actionButton.setEnabled(state);
     }
 }

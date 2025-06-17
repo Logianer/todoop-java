@@ -13,7 +13,7 @@ import de.dhsn_ooe.todo.Exception.ItemNotFoundException;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoNote;
 
-public abstract class TodoNoteController
+public class TodoNoteController
         implements CRUDController<TodoNote> {
 
     private static List<TodoControllerListener<TodoNoteController>> listeners = new ArrayList<>();
@@ -24,7 +24,9 @@ public abstract class TodoNoteController
     public int create(TodoNote object) {
         int id;
         try {
-            id = GenericDBQuery.insertRecord(TABLE_NAME, Map.of("title", object.getTitle(), "type", object.getType()));
+            id = GenericDBQuery.insertRecord(TABLE_NAME,
+                    Map.of("title", object.getTitle(), "list_type", object.getType()));
+            GenericDBQuery.insertRecord("todo_note", Map.of("list_id", id));
             object.setId(id);
             this.fireEvent();
             return id;
@@ -80,10 +82,16 @@ public abstract class TodoNoteController
     public boolean update(TodoNote object, int id) {
         try {
             PreparedStatement query = SQLiteDB.conn
-                    .prepareStatement("UPDATE todo_list set title = ? where list_id = ?");
+                    .prepareStatement(
+                            "UPDATE todo_list set title = ? where list_id = ?");
+            PreparedStatement query2 = SQLiteDB.conn
+                    .prepareStatement("UPDATE todo_note set content = ? where list_id = ?");
             query.setString(1, object.getTitle());
             query.setInt(2, id);
+            query2.setString(1, object.getContent());
+            query2.setInt(2, id);
             query.executeUpdate();
+            query2.executeUpdate();
             this.fireEvent();
             return true;
         } catch (SQLException e) {
@@ -111,9 +119,11 @@ public abstract class TodoNoteController
     public List<TodoNote> getAll() {
         List<TodoNote> lists = new ArrayList<>();
         try {
-            ResultSet results = GenericDBQuery.selectAllRecords(TABLE_NAME);
+            ResultSet results = GenericDBQuery.selectWhereEqualsRecords(TABLE_NAME, "list_type", TodoNote.TYPE);
             while (results.next()) {
                 TodoNote newList = new TodoNote(results.getString("title"));
+                newList.setId(results.getInt("list_id"));
+                newList.setContent(getNoteRecord(newList));
                 lists.add(newList);
             }
         } catch (Exception e) {
@@ -122,6 +132,16 @@ public abstract class TodoNoteController
 
         return lists;
 
+    }
+
+    protected String getNoteRecord(TodoNote note) {
+        try {
+            ResultSet results = GenericDBQuery.selectWhereEqualsRecords("todo_note", "list_id", note.getId());
+            return results.getString("content");
+        } catch (SQLException e) {
+            e.printStackTrace(System.err);
+        }
+        return null;
     }
 
 }

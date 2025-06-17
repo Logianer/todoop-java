@@ -8,12 +8,16 @@ import de.dhsn_ooe.todo.UI.MainFrame;
  */
 public class Main {
         /**
+         * This property is used by all child JFrames for having a reference Location to appear at.
+         */
+        public static MainFrame mainFrame;
+        /**
          * The starting point of the application
          * 
          * @param args ..
          */
         public static void main(String[] args) {
                 SQLiteDB.init();
-                new MainFrame();
+                mainFrame = new MainFrame();
         }
 }

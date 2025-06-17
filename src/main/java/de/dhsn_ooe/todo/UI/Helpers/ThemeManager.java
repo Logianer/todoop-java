@@ -56,7 +56,7 @@ public class ThemeManager {
         return getDefaultFont().deriveFont(attributes);
     }
 
-    public static void transparentButton(JButton button) {
+    public static void setTransparentButton(JButton button) {
         button.setContentAreaFilled(false); // Hintergrund transparent
         button.setBorderPainted(false); // Keine Umrandung
         button.setFocusPainted(false); // Kein Fokusrahmen

@@ -110,7 +110,7 @@ public class TodoListController
     public List<TodoCheckList> getAll() {
         List<TodoCheckList> lists = new ArrayList<>();
         try {
-            ResultSet results = GenericDBQuery.selectWhereEqualsRecords(TABLE_NAME, "list_type", 1);
+            ResultSet results = GenericDBQuery.selectWhereEqualsRecords(TABLE_NAME, "list_type", TodoCheckList.TYPE);
             while (results.next()) {
                 TodoCheckList newList = new TodoCheckList(results.getString("title"));
                 newList.setId(results.getInt("list_id"));
