@@ -6,8 +6,12 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -26,6 +30,9 @@ public class InputWindow extends JFrame {
     protected String message;
     protected JComponent input;
     protected String action;
+    protected JButton actionButton;
+    private List<ActionListener> listeners = new ArrayList<>();
+    
     private final KeyAdapter keyListener = new KeyAdapter() {
         @Override
         public void keyPressed(KeyEvent e) {
@@ -57,9 +64,10 @@ public class InputWindow extends JFrame {
         c.weightx = 1;
         c.anchor = GridBagConstraints.SOUTHEAST;
         c.insets = new Insets(10, 10, 15, 15);
-        JButton btn = new JButton(this.action);
-        cp.add(btn, c);
-        btn.addKeyListener(keyListener);
+        actionButton = new JButton(this.action);
+        cp.add(actionButton, c);
+        actionButton.addKeyListener(keyListener);
+        actionButton.addActionListener(l -> fireActionEvent(l));
         this.setMinimumSize(new Dimension(200, 200));
         this.setSize(new Dimension(250, 180));
         this.setLocationRelativeTo(null);
@@ -77,18 +85,37 @@ public class InputWindow extends JFrame {
         }
         this.input = input;
         this.input.addKeyListener(keyListener);
-        GridBagConstraints c = new GridBagConstraints();
-        c.gridy = 1;
-        c.weightx = 1;
-        c.weighty = 0.5;
-        c.insets = new Insets(10, 10, 10, 10);
-        c.fill = GridBagConstraints.BOTH;
-        cp.add(this.input, c);
+        cp.add(this.input, this.getInputConstraints());
     }
 
     private void onPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             this.dispose();
         }
+    }
+
+    protected GridBagConstraints getInputConstraints() {
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridy = 1;
+        c.weightx = 1;
+        c.weighty = 0.5;
+        c.insets = new Insets(10, 10, 10, 10);
+        c.fill = GridBagConstraints.BOTH;
+        return c;
+    }
+
+    public void addActionListener(ActionListener l) {
+        listeners.add(l);
+    }
+    public void removeActionListener(ActionListener l) {
+        listeners.remove(l);
+    }
+
+    protected void fireActionEvent(ActionEvent e) {
+        actionButton.setEnabled(false);
+        for (ActionListener listener : listeners) {
+            listener.actionPerformed(e);
+        }
+        actionButton.setEnabled(true);
     }
 }

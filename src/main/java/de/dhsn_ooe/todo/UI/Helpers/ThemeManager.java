@@ -1,10 +1,12 @@
 package de.dhsn_ooe.todo.UI.Helpers;
 
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.font.TextAttribute;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JButton;
 import javax.swing.UIDefaults;
 
 import com.formdev.flatlaf.FlatLaf;
@@ -52,5 +54,13 @@ public class ThemeManager {
         Map<TextAttribute, Object> attributes = new HashMap<>(getDefaultFont().getAttributes());
         attributes.putAll(newAttributes);
         return getDefaultFont().deriveFont(attributes);
+    }
+
+    public static void transparentButton(JButton button) {
+        button.setContentAreaFilled(false); // Hintergrund transparent
+        button.setBorderPainted(false); // Keine Umrandung
+        button.setFocusPainted(false); // Kein Fokusrahmen
+        button.setOpaque(false);
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 }

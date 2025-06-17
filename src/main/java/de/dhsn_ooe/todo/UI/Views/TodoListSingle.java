@@ -1,8 +1,13 @@
 package de.dhsn_ooe.todo.UI.Views;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 import org.kordamp.ikonli.materialdesign2.MaterialDesignA;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
@@ -12,6 +17,7 @@ import de.dhsn_ooe.todo.Controller.TodoListController;
 import de.dhsn_ooe.todo.Events.WindowManager;
 import de.dhsn_ooe.todo.Exception.ItemNotFoundException;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
+import de.dhsn_ooe.todo.UI.Components.SingleTodoItem;
 import de.dhsn_ooe.todo.UI.Components.Title;
 import de.dhsn_ooe.todo.UI.Components.TodoCheckboxList;
 import de.dhsn_ooe.todo.UI.Components.TodoInputWindow;
@@ -28,41 +34,56 @@ public class TodoListSingle extends JPanel {
      */
     protected BorderLayout layout = new BorderLayout();
     private TodoCheckList list;
+    protected TodoCheckboxList listDisplay;
+
     /**
-     * constructs a list with the given elements, a top bar and the layout of the panel
+     * constructs a list with the given elements, a top bar and the layout of the
+     * panel
      */
     public TodoListSingle(int listId) {
         super();
         this.setLayout(layout);
         try {
-            this.list = new TodoListController<TodoCheckList>().getById(listId);
+            this.list = new TodoListController().getById(listId);
         } catch (ItemNotFoundException e) {
             this.list = new TodoCheckList("NOTFOUND");
         }
-        TodoCheckboxList check = new TodoCheckboxList(list);
-        
+        this.listDisplay = new TodoCheckboxList(list);
+        JScrollPane scrollableList = new JScrollPane(listDisplay);
+        scrollableList.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollableList.getVerticalScrollBar().setUnitIncrement(16);
+        scrollableList.setBorder(BorderFactory.createEmptyBorder());
         this.add(createTopBar(), BorderLayout.NORTH);
-        this.add(check, BorderLayout.CENTER);
+        this.add(scrollableList, BorderLayout.CENTER);
     }
 
     /**
-     * creates the top bar of the list with a title an a back button
+     * creates the top bar of the list with a title and a back button
+     * 
      * @return panel with all elements
      */
     private JPanel createTopBar() {
         JPanel panel = new JPanel();
-        JButton button1 = new JButton();
-        JButton button2 = new JButton();
+        JButton backButton = new JButton();
+        JButton addButton = new JButton();
         Title title = new Title(list.getTitle(), 15);
         panel.setLayout(new BorderLayout());
-        button1.setIcon(FontIcon.of(MaterialDesignA.ARROW_LEFT, 16, ThemeManager.getDefaults().getColor("Label.foreground")));
-        button1.addActionListener(e -> WindowManager.changeWindow(new Dashboard()));
-        button2.setIcon(FontIcon.of(MaterialDesignP.PLUS, 16, ThemeManager.getDefaults().getColor("Label.foreground")));
-        button2.addActionListener(e -> new TodoInputWindow());
+        backButton.setIcon(
+                FontIcon.of(MaterialDesignA.ARROW_LEFT, 24, ThemeManager.getDefaults().getColor("Label.foreground")));
+        ThemeManager.transparentButton(backButton);
+        backButton.addActionListener(e -> {
+            listDisplay.onBeforeDestroy();
+            WindowManager.changeWindow(new Dashboard());
+        });
+        addButton.setIcon(
+                FontIcon.of(MaterialDesignP.PLUS, 24, ThemeManager.getDefaults().getColor("Label.foreground")));
+        ThemeManager.transparentButton(addButton);
+
+        addButton.addActionListener(e -> new TodoInputWindow());
 
         panel.add(title, BorderLayout.CENTER);
-        panel.add(button1, BorderLayout.WEST);
-        panel.add(button2, BorderLayout.EAST);
+        panel.add(backButton, BorderLayout.WEST);
+        panel.add(addButton, BorderLayout.EAST);
         return panel;
     }
 }

@@ -5,30 +5,32 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import de.dhsn_ooe.todo.Events.TodoControllerListener;
 import de.dhsn_ooe.todo.Exception.ItemNotFoundException;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoItem;
+import de.dhsn_ooe.todo.Model.TodoNote;
 
 public class TodoListController
         implements CRUDController<TodoCheckList>, RelationController<TodoCheckList, TodoItem> {
 
     private static List<TodoControllerListener<TodoListController>> listeners = new ArrayList<>();
+    private static final String TABLE_NAME = "todo_list";
 
     @Override
-    public int create(TodoCheckList object) throws SQLException {
-        PreparedStatement query = SQLiteDB.conn
-                .prepareStatement("INSERT INTO todo_list (title, list_type) VALUES (?,?)");
-        query.setString(1, object.getTitle());
-        query.setInt(2, object.getType());
-        query.executeUpdate();
-        ResultSet results = SQLiteDB.conn.createStatement().executeQuery("SELECT last_insert_rowid();");
-        int id = results.getInt(1);
-        object.setId(id);
-
-        this.fireEvent();
-        return id;
+    public int create(TodoCheckList object) {
+        int id;
+        try {
+            id = GenericDBQuery.insertRecord(TABLE_NAME, Map.of("title", object.getTitle(), "list_type", object.getType()));
+            object.setId(id);
+            this.fireEvent();
+            return id;
+        } catch (SQLException e) {
+            e.printStackTrace(System.err);
+        }
+        return 0;
     }
 
     /**
@@ -74,18 +76,19 @@ public class TodoListController
     }
 
     @Override
-    public void update(TodoCheckList object, int id) {
+    public boolean update(TodoCheckList object, int id) {
         try {
             PreparedStatement query = SQLiteDB.conn
                     .prepareStatement("UPDATE todo_list set title = ? where list_id = ?");
             query.setString(1, object.getTitle());
             query.setInt(2, id);
             query.executeUpdate();
+            this.fireEvent();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace(System.err);
-        } finally {
-            this.fireEvent();
         }
+        return false;
     }
 
     @Override
@@ -104,13 +107,17 @@ public class TodoListController
     }
 
     @Override
-    public List<TodoCheckList> getAll() throws SQLException {
+    public List<TodoCheckList> getAll() {
         List<TodoCheckList> lists = new ArrayList<>();
-        ResultSet results = SQLiteDB.conn.createStatement().executeQuery("SELECT * from todo_list");
-
-        while (results.next()) {
-            TodoCheckList newList = new TodoCheckList(results.getString("title"));
-            lists.add(newList);
+        try {
+            ResultSet results = GenericDBQuery.selectWhereEqualsRecords(TABLE_NAME, "list_type", 1);
+            while (results.next()) {
+                TodoCheckList newList = new TodoCheckList(results.getString("title"));
+                newList.setId(results.getInt("list_id"));
+                lists.add(newList);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
         }
 
         return lists;
@@ -118,17 +125,19 @@ public class TodoListController
     }
 
     @Override
-    public List<TodoItem> getRelatedItems(TodoCheckList object) throws SQLException {
+    public List<TodoItem> getRelatedItems(TodoCheckList object) {
         List<TodoItem> items = new ArrayList<>();
-        PreparedStatement query = SQLiteDB.conn.prepareStatement("SELECT * from todo_item where list_id = ?");
-        query.setInt(1, object.getId());
-        ResultSet results = query.executeQuery();
-        while (results.next()) {
-            TodoItem item = new TodoItem(object);
-            item.setId(results.getInt("item_id"));
-            item.setState(results.getInt("checked") == 1);
-            item.setStringContent(results.getString("content"));
-            items.add(item);
+        try {
+            ResultSet results = GenericDBQuery.selectWhereEqualsRecords("todo_item", "list_id", object.getId());
+            while (results.next()) {
+                TodoItem item = new TodoItem(object);
+                item.setId(results.getInt("item_id"));
+                item.setState(results.getInt("checked") == 1);
+                item.setStringContent(results.getString("content"));
+                items.add(item);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
         }
         return items;
     }

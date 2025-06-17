@@ -7,9 +7,9 @@ import de.dhsn_ooe.todo.Exception.ItemNotFoundException;
 import de.dhsn_ooe.todo.Exception.OrphanedRelationException;
 
 public interface CRUDController<E> {
-    public int create(E object) throws SQLException;
+    public int create(E object);
     public E getById(int id) throws ItemNotFoundException, OrphanedRelationException;
-    public List<E> getAll() throws SQLException;
-    public void update(E object, int id) throws SQLException;
-    public boolean delete(E object) throws SQLException;    
+    public List<E> getAll();
+    public boolean update(E object, int id);
+    public boolean delete(E object);    
 }

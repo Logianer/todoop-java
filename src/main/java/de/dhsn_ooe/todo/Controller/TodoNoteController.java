@@ -4,10 +4,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.dhsn_ooe.todo.Events.TodoControllerListener;
 import de.dhsn_ooe.todo.Exception.ItemNotFoundException;
+import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoNote;
 
 public abstract class TodoNoteController
@@ -15,19 +18,20 @@ public abstract class TodoNoteController
 
     private static List<TodoControllerListener<TodoNoteController>> listeners = new ArrayList<>();
 
-    @Override
-    public int create(TodoNote object) throws SQLException {
-        PreparedStatement query = SQLiteDB.conn
-                .prepareStatement("INSERT INTO todo_list (title, list_type) VALUES (?,?)");
-        query.setString(1, object.getTitle());
-        query.setInt(2, object.getType());
-        query.executeUpdate();
-        ResultSet results = SQLiteDB.conn.createStatement().executeQuery("SELECT last_insert_rowid();");
-        int id = results.getInt(1);
-        object.setId(id);
+    private static final String TABLE_NAME = "todo_list";
 
-        this.fireEvent();
-        return id;
+    @Override
+    public int create(TodoNote object) {
+        int id;
+        try {
+            id = GenericDBQuery.insertRecord(TABLE_NAME, Map.of("title", object.getTitle(), "type", object.getType()));
+            object.setId(id);
+            this.fireEvent();
+            return id;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     /**
@@ -73,18 +77,19 @@ public abstract class TodoNoteController
     }
 
     @Override
-    public void update(TodoNote object, int id) {
+    public boolean update(TodoNote object, int id) {
         try {
             PreparedStatement query = SQLiteDB.conn
                     .prepareStatement("UPDATE todo_list set title = ? where list_id = ?");
             query.setString(1, object.getTitle());
             query.setInt(2, id);
             query.executeUpdate();
+            this.fireEvent();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace(System.err);
-        } finally {
-            this.fireEvent();
         }
+        return false;
     }
 
     @Override
@@ -103,13 +108,16 @@ public abstract class TodoNoteController
     }
 
     @Override
-    public List<TodoNote> getAll() throws SQLException {
+    public List<TodoNote> getAll() {
         List<TodoNote> lists = new ArrayList<>();
-        ResultSet results = SQLiteDB.conn.createStatement().executeQuery("SELECT * from todo_list");
-
-        while (results.next()) {
-            TodoNote newList = new TodoNote(results.getString("title"));
-            lists.add(newList);
+        try {
+            ResultSet results = GenericDBQuery.selectAllRecords(TABLE_NAME);
+            while (results.next()) {
+                TodoNote newList = new TodoNote(results.getString("title"));
+                lists.add(newList);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
         }
 
         return lists;

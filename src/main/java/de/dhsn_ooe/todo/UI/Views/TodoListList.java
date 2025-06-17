@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import de.dhsn_ooe.todo.Controller.TodoListController;
+import de.dhsn_ooe.todo.Events.TodoControllerListener;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.UI.Components.ListCard;
 
@@ -21,28 +22,25 @@ public class TodoListList extends JPanel {
     /**
      * layout of the list
      */
-    protected GridLayout layout = new GridLayout(0, 3, 10,10);
+    protected GridLayout layout = new GridLayout(0, 3, 10, 10);
+    private TodoControllerListener<TodoListController> listener = new TodoControllerListener<TodoListController>() {
+        @Override
+        public void listChanged(TodoListController list) {
+            repaintLists();
+        }
+    };
 
     /**
      * contstructs an empty list with the desired layout
-     * adds listeners to the components to trigger the right events on incoming changes
+     * adds listeners to the components to trigger the right events on incoming
+     * changes
      */
     public TodoListList() {
         super();
         this.setLayout(layout);
-        
-        try {
-            List<TodoCheckList> lists = new TodoListController<TodoCheckList>().getAll();
-            for (TodoCheckList list : lists) {
-                ListCard card = new ListCard(list);
-                card.setPreferredSize(new Dimension(200, 150));
-                this.add(card);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace(System.err);
-        }
+        new TodoListController().addListener(listener);
 
-
+        paintLists();
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -52,15 +50,35 @@ public class TodoListList extends JPanel {
         this.panelResized();
     }
 
+    private void paintLists() {
+        List<TodoCheckList> lists = new TodoListController().getAll();
+        for (TodoCheckList list : lists) {
+            ListCard card = new ListCard(list);
+            card.setPreferredSize(new Dimension(200, 150));
+            this.add(card);
+        }
+    }
+
+    private void repaintLists() {
+        this.removeAll();
+        this.paintLists();
+        this.revalidate();
+        this.repaint();
+    }
+
     /**
      * changes the size of the panel if the size of the window is changed
      */
     private void panelResized() {
         int columnCount = Math.min(4, Math.max(1, this.getWidth() / 250));
-        if(columnCount != layout.getColumns()) {
+        if (columnCount != layout.getColumns()) {
             layout.setColumns(columnCount);
             this.revalidate();
             this.repaint();
         }
+    }
+
+    public void onBeforeDestroy() {
+        new TodoListController().removeListener((TodoControllerListener<TodoListController>) listener);
     }
 }

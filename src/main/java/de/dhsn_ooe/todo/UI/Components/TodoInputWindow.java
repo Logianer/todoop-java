@@ -10,10 +10,18 @@ import javax.swing.JTextArea;
  */
 public class TodoInputWindow extends InputWindow {
 
-    public TodoInputWindow() {
-        super("Todo hinzufügen","Beschreibung eingeben:", "Hinzufügen");
-        JTextArea area = new JTextArea();
+    protected JTextArea area;
+    public TodoInputWindow(String action, String content) {
+        super("Todo hinzufügen","Beschreibung eingeben:", action);
+        area = new JTextArea(content);
         JScrollPane pane = new JScrollPane(area);
         setInputBar(pane);
+    }
+    public TodoInputWindow() {
+        this("Hinzufügen", "");
+    }
+
+    public String getTextContent() {
+        return area.getText();
     }
 }

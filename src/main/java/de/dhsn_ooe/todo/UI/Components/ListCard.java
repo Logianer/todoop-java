@@ -18,31 +18,28 @@ import org.kordamp.ikonli.swing.FontIcon;
 import de.dhsn_ooe.todo.Controller.TodoListController;
 import de.dhsn_ooe.todo.Events.WindowManager;
 import de.dhsn_ooe.todo.Exception.ItemNotFoundException;
-import de.dhsn_ooe.todo.Model.AbstractTodoList;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.UI.Helpers.ThemeManager;
 import de.dhsn_ooe.todo.UI.Views.TodoListSingle;
 
-
 /**
- * class that repesents a card of a list at the home menu of the app 
+ * class that repesents a card of a list at the home menu of the app
  */
 public class ListCard extends JPanel {
 
     /**
      * title of the card
      */
-    private String title;
-    private int listId;
+    private TodoCheckList list;
 
     /**
      * constructs a card with its layout and title
+     * 
      * @param title title of the card
      */
     public ListCard(TodoCheckList list) {
         super();
-        this.title = list.getTitle();
-        this.listId = list.getId();
+        this.list = list;
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -57,12 +54,13 @@ public class ListCard extends JPanel {
         c.weightx = 1;
         c.weighty = 1.0;
         this.add(new JLabel("Lorem ipsum dorlor sit amet."), c);
-        
+
     }
 
     /**
      * creates the action bar (open, edit, delete) for a card
-     * @return created bar 
+     * 
+     * @return created bar
      */
     private JPanel createActionBar() {
         JPanel bar = new JPanel();
@@ -72,23 +70,25 @@ public class ListCard extends JPanel {
         labelC.gridy = 0;
         labelC.gridx = 0;
         labelC.weightx = 1.0;
-        JLabel listName = new JLabel(title);
+        JLabel listName = new JLabel(list.getTitle());
         GridBagConstraints btnC = new GridBagConstraints();
         btnC.fill = GridBagConstraints.HORIZONTAL;
         btnC.anchor = GridBagConstraints.NORTHEAST;
         btnC.insets = new Insets(0, 4, 0, 2);
         btnC.gridy = 0;
         JButton deleteButton = new JButton();
-        deleteButton.setIcon(FontIcon.of(MaterialDesignD.DELETE, 16, ThemeManager.getDefaults().getColor("Label.foreground")));
+        deleteButton.setIcon(
+                FontIcon.of(MaterialDesignD.DELETE, 16, ThemeManager.getDefaults().getColor("Label.foreground")));
         deleteButton.setToolTipText("Liste löschen");
         JButton editButton = new JButton();
-        editButton.setIcon(FontIcon.of(MaterialDesignP.PENCIL,16,ThemeManager.getDefaults().getColor("Label.foreground")));
+        editButton.setIcon(
+                FontIcon.of(MaterialDesignP.PENCIL, 16, ThemeManager.getDefaults().getColor("Label.foreground")));
         editButton.setToolTipText("Titel bearbeiten");
 
         JButton openButton = new JButton();
-        openButton.setIcon(FontIcon.of(MaterialDesignO.OPEN_IN_NEW, 16,ThemeManager.getDefaults().getColor("Label.foreground")));
+        openButton.setIcon(
+                FontIcon.of(MaterialDesignO.OPEN_IN_NEW, 16, ThemeManager.getDefaults().getColor("Label.foreground")));
         openButton.setToolTipText("Liste öffnen");
-
 
         bar.add(listName, labelC);
 
@@ -96,15 +96,17 @@ public class ListCard extends JPanel {
         bar.add(editButton, btnC);
         bar.add(deleteButton, btnC);
 
-        openButton.addActionListener(e -> WindowManager.changeWindow(new TodoListSingle(this.listId)));
+        openButton.addActionListener(e -> WindowManager.changeWindow(new TodoListSingle(list.getId())));
         editButton.addActionListener(e -> {
             try {
-                new TitleInputWindow(new TodoListController<AbstractTodoList>().getById(this.listId));
+                new TitleInputWindow(new TodoListController().getById(list.getId()));
             } catch (ItemNotFoundException err) {
                 err.printStackTrace(System.err);
             }
         });
-        deleteButton.addActionListener(e -> WindowManager.repaintWindow());
+        deleteButton.addActionListener(e -> {
+            new TodoListController().delete(list);
+        });
         return bar;
     }
 }
