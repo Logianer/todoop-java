@@ -1,26 +1,20 @@
 package de.dhsn_ooe.todo.UI.Views;
 
 import java.awt.BorderLayout;
-import java.awt.Cursor;
 import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-
 import org.kordamp.ikonli.materialdesign2.MaterialDesignA;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
 import org.kordamp.ikonli.swing.FontIcon;
 
 import de.dhsn_ooe.todo.Controller.TodoItemController;
-import de.dhsn_ooe.todo.Controller.TodoListController;
 import de.dhsn_ooe.todo.Events.WindowManager;
-import de.dhsn_ooe.todo.Exception.ItemNotFoundException;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoItem;
-import de.dhsn_ooe.todo.UI.Components.SingleTodoItem;
 import de.dhsn_ooe.todo.UI.Components.Title;
 import de.dhsn_ooe.todo.UI.Components.TodoCheckboxList;
 import de.dhsn_ooe.todo.UI.Components.TodoInputWindow;
