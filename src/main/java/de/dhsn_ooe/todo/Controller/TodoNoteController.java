@@ -4,13 +4,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import de.dhsn_ooe.todo.Events.TodoControllerListener;
 import de.dhsn_ooe.todo.Exception.ItemNotFoundException;
-import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoNote;
 
 public class TodoNoteController
@@ -31,7 +29,7 @@ public class TodoNoteController
             this.fireEvent();
             return id;
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
         return 0;
     }
@@ -126,7 +124,7 @@ public class TodoNoteController
                 newList.setContent(getNoteRecord(newList));
                 lists.add(newList);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace(System.err);
         }
 

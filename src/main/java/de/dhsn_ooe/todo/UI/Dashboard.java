@@ -1,6 +1,5 @@
 package de.dhsn_ooe.todo.UI;
 
-import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -11,19 +10,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import org.kordamp.ikonli.materialdesign2.MaterialDesignA;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignF;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
 import org.kordamp.ikonli.swing.FontIcon;
 
 import de.dhsn_ooe.todo.Controller.TodoListController;
 import de.dhsn_ooe.todo.Controller.TodoNoteController;
-import de.dhsn_ooe.todo.Events.WindowManager;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoNote;
 import de.dhsn_ooe.todo.UI.Components.Title;
 import de.dhsn_ooe.todo.UI.Components.TitleInputWindow;
-import de.dhsn_ooe.todo.UI.Components.TodoInputWindow;
 import de.dhsn_ooe.todo.UI.Helpers.ThemeManager;
 import de.dhsn_ooe.todo.UI.Views.TodoListList;
 

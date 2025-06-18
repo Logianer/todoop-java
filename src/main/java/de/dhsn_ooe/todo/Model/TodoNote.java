@@ -32,6 +32,7 @@ public class TodoNote extends AbstractTodoList {
         this.noteContent = htmlContent;
     }
 
+    @Override
     public int getType() {
         return TYPE;
     }

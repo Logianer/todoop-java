@@ -55,7 +55,7 @@ public class TodoItemController implements CRUDController<TodoItem> {
             this.fireEvent();
             return id;
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
         return 0;
     }

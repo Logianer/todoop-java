@@ -1,18 +1,10 @@
 package de.dhsn_ooe.todo.Controller;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
-import javax.naming.spi.DirStateFactory.Result;
-
-import de.dhsn_ooe.todo.Model.TodoCheckList;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.Map;
 
 public class GenericDBQuery {
     public static int insertRecord(String table, Map<String, Object> args) throws SQLException {

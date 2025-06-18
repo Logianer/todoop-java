@@ -1,27 +1,18 @@
 package de.dhsn_ooe.todo.UI.Components;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.event.ItemEvent;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
+import de.dhsn_ooe.todo.Controller.TodoItemController;
 import de.dhsn_ooe.todo.Controller.TodoListController;
 import de.dhsn_ooe.todo.Events.TodoControllerListener;
-import de.dhsn_ooe.todo.Controller.TodoItemController;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoItem;
-import de.dhsn_ooe.todo.UI.Helpers.ThemeManager;
 
 /**
  * class that represents a list of checkboxes on the UI of the app
@@ -37,11 +28,8 @@ public class TodoCheckboxList extends JPanel {
     protected TodoCheckList list;
     private final GridBagConstraints defaultConstraints = new GridBagConstraints(0, -1, 1, 1, 1.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0);
-    protected TodoControllerListener<TodoItemController> listener = new TodoControllerListener<TodoItemController>() {
-        @Override
-        public void listChanged(TodoItemController list) {
-            repaintButtons();
-        }
+    protected TodoControllerListener<TodoItemController> listener = (TodoItemController list1) -> {
+        repaintButtons();
     };
 
     /**
@@ -93,19 +81,6 @@ public class TodoCheckboxList extends JPanel {
         this.paintButtons();
         this.revalidate();
         this.repaint();
-    }
-
-    /**
-     * repaints the window if a item was changed (checkbox
-     * checked/unchecked/removed/added)
-     * 
-     * @param e    event that occured
-     * @param item item that the event occured on
-     */
-    private void onItemStateChanged(ItemEvent e, TodoItem item) {
-        item.setState(e.getStateChange() == ItemEvent.SELECTED);
-        new TodoItemController().update(item, item.getId());
-        repaintButtons();
     }
 
     public void onBeforeDestroy() {

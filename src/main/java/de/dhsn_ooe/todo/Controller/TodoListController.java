@@ -11,7 +11,6 @@ import de.dhsn_ooe.todo.Events.TodoControllerListener;
 import de.dhsn_ooe.todo.Exception.ItemNotFoundException;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoItem;
-import de.dhsn_ooe.todo.Model.TodoNote;
 
 public class TodoListController
         implements CRUDController<TodoCheckList>, RelationController<TodoCheckList, TodoItem> {
@@ -116,7 +115,7 @@ public class TodoListController
                 newList.setId(results.getInt("list_id"));
                 lists.add(newList);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace(System.err);
         }
 
@@ -136,7 +135,7 @@ public class TodoListController
                 item.setStringContent(results.getString("content"));
                 items.add(item);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace(System.err);
         }
         return items;

@@ -8,7 +8,12 @@ public abstract class AbstractTodoList {
     private int id;
     private String title;
 
+    /**
+     * gets the type of the list (todoNote or todoList) and returns it
+     * @return type of the list
+     */
     public abstract int getType();
+
     /**
      * Constructs an empty Object from the class AbstractTodoList
      */

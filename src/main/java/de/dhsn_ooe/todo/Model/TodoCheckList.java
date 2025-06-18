@@ -17,6 +17,7 @@ public class TodoCheckList extends AbstractTodoList {
         this.setTitle(title);
     }
 
+    @Override
     public int getType() {
         return TYPE;
     }

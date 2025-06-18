@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 
 import org.kordamp.ikonli.materialdesign2.MaterialDesignD;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignF;
-import org.kordamp.ikonli.materialdesign2.MaterialDesignL;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignO;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
 import org.kordamp.ikonli.swing.FontIcon;
@@ -21,7 +20,6 @@ import org.kordamp.ikonli.swing.FontIcon;
 import de.dhsn_ooe.todo.Controller.TodoListController;
 import de.dhsn_ooe.todo.Controller.TodoNoteController;
 import de.dhsn_ooe.todo.Events.WindowManager;
-import de.dhsn_ooe.todo.Exception.ItemNotFoundException;
 import de.dhsn_ooe.todo.Model.AbstractTodoList;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoNote;
@@ -42,7 +40,7 @@ public class ListCard extends JPanel {
     /**
      * constructs a card with its layout and title
      * 
-     * @param title title of the card
+     * @param list list that is displayed on the card
      */
     public ListCard(AbstractTodoList list) {
         super();

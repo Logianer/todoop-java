@@ -1,10 +1,8 @@
 package de.dhsn_ooe.todo.UI.Views;
 
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -25,18 +23,12 @@ public class TodoListList extends JPanel {
      * layout of the list
      */
     protected GridLayout layout = new GridLayout(0, 3, 10, 10);
-    private TodoControllerListener<TodoListController> listListener = new TodoControllerListener<TodoListController>() {
-        @Override
-        public void listChanged(TodoListController list) {
-            repaintLists();
-        }
+    private TodoControllerListener<TodoListController> listListener = (TodoListController list) -> {
+        repaintLists();
     };
 
-    private TodoControllerListener<TodoNoteController> noteListener = new TodoControllerListener<TodoNoteController>() {
-        @Override
-        public void listChanged(TodoNoteController list) {
-            repaintLists();
-        }
+    private TodoControllerListener<TodoNoteController> noteListener = (TodoNoteController list) -> {
+        repaintLists();
     };
 
     /**

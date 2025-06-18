@@ -4,13 +4,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.ItemSelectable;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
@@ -54,8 +49,8 @@ public class SingleTodoItem extends JPanel {
         }
 
         checkbox.addItemListener(e -> onItemStateChanged(e));
-        editButton.addActionListener(e -> onEditButtonClick(e));
-        deleteButton.addActionListener(e -> onDeleteButtonClick(e));
+        editButton.addActionListener(e -> onEditButtonClick());
+        deleteButton.addActionListener(e -> onDeleteButtonClick());
         
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(5, 5, 5, 5);
@@ -80,11 +75,11 @@ public class SingleTodoItem extends JPanel {
         new TodoItemController().update(item, item.getId());
     }
 
-    private void onDeleteButtonClick(ActionEvent e) {
+    private void onDeleteButtonClick() {
         new TodoItemController().delete(item);
     }
 
-    private void onEditButtonClick(ActionEvent e) {
+    private void onEditButtonClick() {
         TodoInputWindow window = new TodoInputWindow("Bearbeiten", item.getStringContent());
 
         window.addActionListener(l -> {

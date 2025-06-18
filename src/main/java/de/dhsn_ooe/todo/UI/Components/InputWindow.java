@@ -20,7 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import de.dhsn_ooe.todo.Main;
-import de.dhsn_ooe.todo.UI.MainFrame;
 
 //title, text, backbutton
 /**
@@ -82,7 +81,7 @@ public class InputWindow extends JFrame {
         return title;
     }
 
-    public void setInputBar(JComponent input) {
+    public final void setInputBar(JComponent input) {
         if (this.input != null) {
             return;
         }

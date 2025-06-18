@@ -11,19 +11,13 @@ import javax.swing.JTextArea;
 
 import org.kordamp.ikonli.materialdesign2.MaterialDesignA;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignC;
-import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
 import org.kordamp.ikonli.swing.FontIcon;
 
-import de.dhsn_ooe.todo.Controller.TodoItemController;
 import de.dhsn_ooe.todo.Controller.TodoNoteController;
 import de.dhsn_ooe.todo.Events.WindowManager;
-import de.dhsn_ooe.todo.Model.TodoCheckList;
-import de.dhsn_ooe.todo.Model.TodoItem;
 import de.dhsn_ooe.todo.Model.TodoNote;
-import de.dhsn_ooe.todo.UI.Dashboard;
 import de.dhsn_ooe.todo.UI.Components.Title;
-import de.dhsn_ooe.todo.UI.Components.TodoCheckboxList;
-import de.dhsn_ooe.todo.UI.Components.TodoInputWindow;
+import de.dhsn_ooe.todo.UI.Dashboard;
 import de.dhsn_ooe.todo.UI.Helpers.ThemeManager;
 
 public class SingleTodoNote extends JPanel {
