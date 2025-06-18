@@ -1,160 +1,265 @@
 ---
-title: TODO-App
+config:
+  look: neo
+  layout: elk
+title: Sample title
 ---
 classDiagram
-    direction LR
+direction LR
+	namespace Controller {
+        class CRUDController:::controller {
+	        +create(E object) int
+	        +getById(int id) E
+	        +getAll() List~E~
+	        +update(E object, int id) boolean
+	        +delete(E object) boolean
+        }
+        class TodoListController:::controller {
+	        -List~TodoControllerListener~TodoListController~~ listeners;
+	        +create(TodoCheckList object) int
+	        +addListener(TodoControllerListener~TodoListController~ listener)
+	        +removeListener(TodoControllerListener~TodoListController~ listener)
+	        #fireEvent()
+	        +getById(int id) TodoCheckList
+	        +update(TodoCheckList object, int id) boolean
+	        +delete(TodoCheckList object) boolean
+	        +getAll() List~TodoCheckList~
+	        +getRelatedItems(TodoCheckList object) List~TodoItem~
+        }
+        class RelationController:::controller {
+	        +getRelatedItems(E object) List~T~
+        }
+        class TodoItemController:::controller {
+	        -List~TodoControllerListener~TodoItemController~~ listeners;
+	        +addListener(TodoControllerListener~TodoItemController~ listener)
+	        +removeListener(TodoControllerListener~TodoItemController~ listener)
+	        #fireEvent()
+	        +create(TodoItem object) int
+	        +getById(int id) TodoItem
+	        +update(TodoItem object, int id) boolean
+	        +delete(TodoItem object) boolean
+	        +getAll() List~TodoItem~
+        }
+        class SQLiteDB:::controller {
+	        +Connection conn$
+	        +init()$
+        }
+        class TodoNoteController:::controller {
+	        -List~TodoControllerListener~TodoNoteController~~ listeners;
+	        +addListener(TodoControllerListener~TodoNoteController~ listener)
+	        +removeListener(TodoControllerListener~TodNoteController~ listener)
+	        #fireEvent()
+	        +create(TodoNote object) int
+	        +getById(int id) TodoItem
+	        +update(TodoNote object, int id) boolean
+	        +delete(TodoNote object) boolean
+	        +getAll() List~TodoNote~
+	        +getNoteRecord(TodoNote note) String
+        }
+        class GenericDBQuery:::controller {
+	        +insertRecord(String table, Map args) int$
+	        +selectAll(String table) ResultSet$
+	        +selectWhereEqualsRecords(String table, String column, int value) ResultSet$
+        }
+	}
+	namespace Events {
+        class TodoControllerListener:::event {
+	        +listChanged(T list)
+        }
+        class WindowManagerDispatcher:::event {
+	        +onWindowChanged(JComponent event)
+        }
+        class WindowManager:::event {
+	        +WindowManagerDispatcher dispatcher$
+	        +changeWindow(JComponent window, String windowTitle)$
+	        +repaintWindow()$
+        }
+	}
+	namespace Exception {
+        class ItemNotFoundException:::exception {
+        }
+        class OrphanedRelationException:::exception {
+        }
+	}
+	namespace Model {
+        class AbstractTodoList:::model {
+	        -int id
+	        -String title
+	        +AbstractTodoList()
+	        +getType() int*
+	        +getTitle() String
+	        +setTitle(String title)
+	        +getId() int
+	        +setId(int id)
+        }
+        class TodoCheckList:::model {
+	        +int TYPE$
+	        +TodoCheckList(String title)
+	        +getType() int
+        }
+        class TodoNote:::model {
+	        +int TYPE$
+	        -String noteContent
+	        +TodoNote(String title)
+	        +getContent() String
+	        +setContent(String noteContent)
+	        +getType() int
+        }
+        class TodoItem:::model {
+	        -int id
+	        -String stringContent
+	        -boolean doneState
+	        -TodoCheckList parentList
+	        +getStringContent String
+	        +TodoItem(TodoCheckList list)
+	        +setStringContent(String stringContent)
+	        +setState(boolean state)
+	        +getState() boolean
+	        +getId() int
+	        +setId(int id)
+	        +TodoCheckList getList()
+        }
+	}
+	namespace UI {
+        class Dashboard:::ui {
+	        +Dashboard()
+	        -createTopBar() JPanel
+        }
+        class MainFrame:::ui {
+	        #Container cp
+	        #JComponent child
+	        +MainFrame()
+        }
+        class InputWindow:::ui {
+	        #BorderLayout layout
+	        #Container cp
+	        #String message
+	        #JComponent input
+	        #String action
+	        #JButton actionButton
+	        -List~ActionListener~ listeners
+	        -KeyAdapter keyListener
+	        +InputWindow(String title, String message, JComponent input, String action)
+	        +InputWindow(String title, String, message, String action)
+	        -createTopBar() JComponent
+	        +setInputBar(JComponent input)
+	        -onPressed(KeyEvent e)
+	        #getInputConstraints() GridBagConstraints
+	        +addActionListener(ActionListener l)
+	        +removeActionListener(ActionListener l)
+	        #fireActionEvent(ActionEvent e)
+	        #setButtonEnabled(boolean state)
+        }
+        class ListCard:::ui {
+	        -AbstractTodoList list
+	        +ListCard(TodoCheckList list)
+	        -createActionBar() JPanel
+        }
+        class Title:::ui {
+	        +Title(String text)
+	        +Title(String text, int fontSize)
+        }
+        class SingleTodoItem:::ui {
+	        -TodoItem item
+	        #JCheckBox checkbox
+	        +SingleTodoItem(TodoItem item)
+	        -onItemStateChanged(ItemEvent e)
+	        -onDeleteButtonClick()
+	        -onEditButtonClick()
+        }
+        class TitleInputWindow:::ui {
+	        #JTextField inputField
+	        +TitleInputWindow()
+	        +TitleInputWindow(String message, String action, String content)
+	        +getTextContent() String
+	        #getInputConstraints() GridBagConstraints
+        }
+        class TodoInputWindow:::ui {
+	        #JTextArea area
+	        +TodoInputWindow()
+	        +TodoInputWindow(String action, String content)
+	        +getTextContent() String
+        }
+        class TodoCheckboxList:::ui {
+	        #TodoCheckList list
+	        -GridBagConstraints defaultConstraints
+	        #TodoControllerListener~TodoItemController~ listener
+	        +TodoCheckboxList(TodoCheckList list)
+	        +paintButtons()
+	        +repaintButtons()
+	        +onBeforeDestroy()
+        }
+        class TodoListList:::ui {
+	        #GridLayout layout
+	        -TodoControllerListener~TodoListController~ listListener
+	        -TodoControllerListener~TodoNoteController~ noteListener
+	        +TodoListList()
+	        -panelResized()
+	        -paintLists()
+	        -repaintLists()
+	        +onBeforeDestroy()
+        }
+        class SingleTodoNote:::ui {
+	        #BorderLayout layout
+	        -TodoNote note
+	        -JTextArea area
+	        +SingleTodoNote(TodoNote note)
+	        -createTopBar() JPanel
+        }
+        class ThemeManager:::ui {
+	        #FlatLaf theme$
+	        +setTheme(FlatLaf theme)$
+	        +getDefaults() UIDefaults$
+	        +getDefaultFont() Font$
+	        +modifyDefaultFont(Map~TextAttribute, Object~ newAttributes) Font$
+	        +setTransparentButton(JButton button)
+        }
+        class SingleTodoList:::ui {
+            #BorderLayout layout
+            -TodoCheckList list
+            #TodoCheckboxist listDisplay
+
+            +SingleTodoList(TodoCheckList list)
+            -createTopBar() JPanel
+        }
+	}
+    class EventListener["java.util.EventListener"] {
+    }
+    class JavaException["java.lang.Exception"] {
+    }
+    class JPanel["javax.swing.JPanel"] {
+    }
+    class JFrame["javax.swing.JFrame"] {
+    }
+    class JLabel["javax.swing.JLabel"] {
+    }
+    class Main {
+	    +MainFrame mainFrame
+	    +main(String[] args)$
+    }
+
+
+	<<interface>> CRUDController
+	<<interface>> RelationController
+	<<interface>> TodoControllerListener
+	<<interface>> WindowManagerDispatcher
+	<<abstract>> AbstractTodoList
+	<<abstract>> InputWindow
+	<<interface>> JavaException
+
     CRUDController <|-- TodoListController : implements
     RelationController <|-- TodoListController : implements
     CRUDController <|-- TodoItemController : implements
-    namespace Controller {
-        class CRUDController~E~ {
-            <<interface>>
-            +create(E object) int
-            +getById(int id) E
-            +getAll() List~E~
-            +update(E object, int id) boolean
-            +delete(E object) boolean
-        }
-        class RelationController~E, T~ {
-            <<interface>>
-            +getRelatedItems(E object) List~T~
-        }
-        class SQLiteDB {
-            +Connection conn$
-            +init()$
-        }
-        class TodoListController {
-            -List~TodoControllerListener~TodoListController~~ listeners;
-
-            +create(TodoCheckList object) int
-            +addListener(TodoControllerListener~TodoListController~ listener)
-            +removeListener(TodoControllerListener~TodoListController~ listener)
-            #fireEvent()
-            +getById(int id) TodoCheckList
-            +update(TodoCheckList object, int id) boolean
-            +delete(TodoCheckList object) boolean
-            +getAll() List~TodoCheckList~
-            +getRelatedItems(TodoCheckList object) List~TodoItem~
-        }
-        class TodoItemController {
-            
-            -List~TodoControllerListener~TodoItemController~~ listeners;
-
-            +addListener(TodoControllerListener~TodoItemController~ listener)
-            +removeListener(TodoControllerListener~TodoItemController~ listener)
-            #fireEvent()
-
-            +create(TodoItem object) int
-            +getById(int id) TodoItem
-            +update(TodoItem object, int id) boolean
-            +delete(TodoItem object) boolean
-            +getAll() List~TodoItem~
-        }
-
-        class TodoNoteController {
-            
-            -List~TodoControllerListener~TodoNoteController~~ listeners;
-
-            +addListener(TodoControllerListener~TodoNoteController~ listener)
-            +removeListener(TodoControllerListener~TodNoteController~ listener)
-            #fireEvent()
-
-            +create(TodoNote object) int
-            +getById(int id) TodoItem
-            +update(TodoNote object, int id) boolean
-            +delete(TodoNote object) boolean
-            +getAll() List~TodoNote~
-
-            +getNoteRecord(TodoNote note) String
-        }
-
-        class GenericDBQuery {
-            +insertRecord(String table, Map<String, Object> args) int$
-            +selectAll(String table) ResultSet$
-            +selectWhereEqualsRecords(String table, String column, int value) ResultSet$
-        }
-    }
     TodoControllerListener *-- TodoListController
     TodoControllerListener *-- TodoNoteController
     TodoControllerListener *-- TodoItemController
-
-    class EventListener["java.util.EventListener"]
     EventListener <|-- TodoControllerListener
     WindowManagerDispatcher *-- WindowManager
-    namespace Events {
-        class TodoControllerListener~T~ {
-            <<interface>>
-            +listChanged(T list)
-        }
-        class WindowManager {
-            +WindowManagerDispatcher dispatcher$
-            +changeWindow(JComponent window, String windowTitle)$
-            +repaintWindow()$
-        }
-        class WindowManagerDispatcher {
-            <<interface>>
-            +onWindowChanged(JComponent event)
-        }
-    }
-    class JavaException["java.lang.Exception"]  {
-        <<interface>>
-    }
     JavaException <|-- ItemNotFoundException : implements
     JavaException <|-- OrphanedRelationException : implements
-    namespace Exception {
-        class ItemNotFoundException
-        class OrphanedRelationException
-    }
     AbstractTodoList <|-- TodoCheckList
     AbstractTodoList <|-- TodoNote
     TodoCheckList *-- TodoItem
-    namespace Model {
-        class AbstractTodoList {
-            <<abstract>>
-            -int id
-            -String title
-
-            +AbstractTodoList()
-            +getType() int*
-            +getTitle() String
-            +setTitle(String title)
-            +getId() int
-            +setId(int id)
-        }
-        class TodoCheckList {
-            +int TYPE$
-            +TodoCheckList(String title)
-            +getType() int
-        }
-        class TodoItem {
-            -int id
-            -String stringContent
-            -boolean doneState
-            -TodoCheckList parentList
-
-            +TodoItem(TodoCheckList list)
-            +setStringContent(String stringContent)
-            +getStringContent String
-            +setState(boolean state)
-            +getState() boolean
-            +getId() int
-            +setId(int id)
-            +TodoCheckList getList()
-        }
-        class TodoNote {
-            +int TYPE$
-            -String noteContent
-
-            +TodoNote(String title)
-            +getContent() String
-            +setContent(String noteContent)
-            +getType() int
-        }
-    }
-    class JPanel["javax.swing.JPanel"]
-    class JFrame["javax.swing.JFrame"]
-    class JPanel["javax.swing.JPanel"]
-    class JLabel["javax.swing.JLabel"]
     JPanel <|-- Dashboard
     JFrame <|-- MainFrame
     JFrame <|-- InputWindow
@@ -168,115 +273,13 @@ classDiagram
     TodoCheckList *-- TodoCheckboxList
     JPanel <|-- TodoListList
     TodoCheckList *-- SingleTodoList
+    TodoCheckboxList *-- SingleTodoList
     TodoNote *-- SingleTodoNote
     JPanel <|-- SingleTodoList
     JPanel <|-- SingleTodoNote
-    namespace UI {
-        class Dashboard {
-            +Dashboard()
 
-            -createTopBar() JPanel
-        }
-        class MainFrame {
-            #Container cp
-            #JComponent child
-
-            +MainFrame()
-        }
-        class InputWindow {
-            <<abstract>>
-            #BorderLayout layout
-            #Container cp
-            #String message
-            #JComponent input
-            #String action
-            #JButton actionButton
-            -List~ActionListener~ listeners
-            -KeyAdapter keyListener
-
-            +InputWindow(String title, String message, JComponent input, String action)
-            +InputWindow(String title, String, message, String action)
-            -createTopBar() JComponent
-            +setInputBar(JComponent input)
-            -onPressed(KeyEvent e)
-            #getInputConstraints() GridBagConstraints
-
-            +addActionListener(ActionListener l)
-            +removeActionListener(ActionListener l)
-            #fireActionEvent(ActionEvent e)
-            #setButtonEnabled(boolean state)
-        }
-        class ListCard {
-            -AbstractTodoList list
-
-            +ListCard(TodoCheckList list)
-            -createActionBar() JPanel
-        }
-        class SingleTodoItem {
-            -TodoItem item
-            #JCheckBox checkbox
-
-            +SingleTodoItem(TodoItem item)
-            -onItemStateChanged(ItemEvent e)
-            -onDeleteButtonClick()
-            -onEditButtonClick()
-        }
-        class SingleTodoNote {
-            #BorderLayout layout
-            -TodoNote note
-            -JTextArea area
-
-            +SingleTodoNote(TodoNote note)
-            -createTopBar() JPanel
-        }
-        class Title {
-            +Title(String text)
-            +Title(String text, int fontSize)
-        }
-        class TitleInputWindow {
-            #JTextField inputField
-            +TitleInputWindow()
-            +TitleInputWindow(String message, String action, String content)
-            +getTextContent() String
-            #getInputConstraints() GridBagConstraints
-        }
-        class TodoCheckboxList {
-            #TodoCheckList list
-            -GridBagConstraints defaultConstraints
-            #TodoControllerListener~TodoItemController~ listener
-            +TodoCheckboxList(TodoCheckList list)
-            +paintButtons()
-            +repaintButtons()
-            +onBeforeDestroy()
-        }
-        class TodoInputWindow {
-            #JTextArea area
-            +TodoInputWindow()
-            +TodoInputWindow(String action, String content)
-            +getTextContent() String
-        }
-        class ThemeManager {
-            #FlatLaf theme$
-
-            +setTheme(FlatLaf theme)$
-            +getDefaults() UIDefaults$
-            +getDefaultFont() Font$
-            +modifyDefaultFont(Map~TextAttribute, Object~ newAttributes) Font$
-            +setTransparentButton(JButton button)
-        }
-        class TodoListList {
-            #GridLayout layout
-            -TodoControllerListener~TodoListController~ listListener
-            -TodoControllerListener~TodoNoteController~ noteListener
-
-            +TodoListList()
-            -panelResized()
-            -paintLists()
-            -repaintLists()
-            +onBeforeDestroy()
-        }
-    }
-    class Main {
-        +MainFrame mainFrame
-        +main(String[] args)$
-    }
+	classDef controller :, stroke-width:1px, stroke-dasharray:none, stroke:#FBCC5A, fill:#F0EFBB, color:#8e742D
+	classDef event :, stroke-width:1px, stroke-dasharray:none, stroke:#FBB35A, fill:#FFEFDB, color:#8F632D
+	classDef exception :, stroke-width:1px, stroke-dasharray:none, stroke:#FF5978, fill:#FFDFE5, color:#8E2236
+	classDef model :, stroke-width:1px, stroke-dasharray:none, stroke:#FF5978, fill:#FFDFE5, color:#8E2236
+	classDef ui :,stroke-width:1px, stroke-dasharray:none, stroke:#374D7C, fill:#E2EBFF, color:#374D7C
