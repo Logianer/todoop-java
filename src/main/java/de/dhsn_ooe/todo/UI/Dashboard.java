@@ -72,7 +72,7 @@ public class Dashboard extends JPanel {
         addButton.setMargin(new Insets(5, 5, 5, 5));
         addNoteButton.setMargin(addButton.getMargin());
         addButton.setIcon(
-                FontIcon.of(MaterialDesignP.PLUS, 24, ThemeManager.getDefaults().getColor("Label.foreground")));
+                FontIcon.of(MaterialDesignP.PLAYLIST_PLUS, 24, ThemeManager.getDefaults().getColor("Label.foreground")));
         addNoteButton.setIcon(FontIcon.of(MaterialDesignF.FILE_PLUS, 24, ThemeManager.getDefaults().getColor("Label.foreground")));
         ThemeManager.setTransparentButton(addButton);
         ThemeManager.setTransparentButton(addNoteButton);

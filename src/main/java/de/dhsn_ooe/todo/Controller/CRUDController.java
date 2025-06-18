@@ -1,6 +1,5 @@
 package de.dhsn_ooe.todo.Controller;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import de.dhsn_ooe.todo.Exception.ItemNotFoundException;
