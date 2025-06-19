@@ -6,6 +6,10 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Map;
 
+
+/**
+ * class that handles the querys in the database
+ */
 public class GenericDBQuery {
     public static int insertRecord(String table, Map<String, Object> args) throws SQLException {
         String columnNames = String.join(", ", args.keySet());
@@ -30,11 +34,25 @@ public class GenericDBQuery {
         return id;
     }
 
+    /**
+     * selects all entrys of a table
+     * @param table table that the entrys will be selected from
+     * @return the result of the query (all entrys of the given table)
+     * @throws SQLException exception that will be trown if the query fails
+     */
     public static ResultSet selectAllRecords(String table) throws SQLException {
         ResultSet results = SQLiteDB.conn.createStatement().executeQuery("SELECT * from " + table);
         return results;
     }
 
+    /**
+     * selects all entrys whos colums have the given 
+     * @param table
+     * @param column
+     * @param value
+     * @return
+     * @throws SQLException
+     */
     public static ResultSet selectWhereEqualsRecords(String table, String column, Integer value) throws SQLException {
         PreparedStatement query = SQLiteDB.conn
                 .prepareStatement("SELECT * from " + table + " where " + column + " = ?");

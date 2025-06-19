@@ -14,11 +14,20 @@ public class TitleInputWindow extends InputWindow {
 
     protected JTextField inputField;
 
+    /**
+     * constructs a title input window
+     */
     public TitleInputWindow() {
         this("Name der neuen Liste eingeben:", "Hinzufügen", "");
         setButtonEnabled(false);
     }
 
+    /**
+     * constructs a title input window
+     * @param message ..
+     * @param action ..
+     * @param content content that will be put in the input field by the user
+     */
     public TitleInputWindow(String message, String action, String content) {
         super("Titel bearbeiten", message, action);
         inputField = new JTextField(content);

@@ -43,6 +43,10 @@ public abstract class AbstractTodoList {
         return id;
     }
 
+    /**
+     * sets the id of the list
+     * @param id id that will be set for the list
+     */
     public void setId(int id) {
         if (this.id == 0) {
             this.id = id;
