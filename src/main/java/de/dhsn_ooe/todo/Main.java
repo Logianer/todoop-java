@@ -18,7 +18,7 @@ public class Main {
         /**
          * The starting point of the application
          * 
-         * @param args ..
+         * @param args 
          */
         public static void main(String[] args) {
                 SQLiteDB.init();

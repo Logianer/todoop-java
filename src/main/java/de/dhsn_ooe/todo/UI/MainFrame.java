@@ -26,7 +26,7 @@ public class MainFrame extends JFrame {
     protected JComponent child;
 
     /**
-     * constructs the mainframe and refreshes when events a triggered
+     * constructs the mainframe and refreshes it when events are triggered
      */
     public MainFrame() {
         super();

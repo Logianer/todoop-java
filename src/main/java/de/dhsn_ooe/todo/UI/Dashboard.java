@@ -60,6 +60,10 @@ public class Dashboard extends JPanel {
 
     }
 
+    /**
+     * creates the topbar of the dashboard (buttons and caption) and returns the constructed panel
+     * @return topbar of the dashboard
+     */
     private JPanel createTopBar() {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());

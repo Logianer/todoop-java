@@ -16,7 +16,7 @@ import de.dhsn_ooe.todo.Model.TodoItem;
 
 /**
  * class that represents a list of checkboxes on the UI of the app
- * The checkboxes can be clicked an will move to the bottom of the displayed
+ * The checkboxes can be clicked and will move to the bottom of the displayed
  * list, the text will change its color and gets striked through.
  * When unchecked the checkbox will move to it's original spot on the list
  */
@@ -26,8 +26,16 @@ public class TodoCheckboxList extends JPanel {
      * list of the checkboxes
      */
     protected TodoCheckList list;
+
+    /**
+     * gridbaglayout of the checkboxlist 
+     */
     private final GridBagConstraints defaultConstraints = new GridBagConstraints(0, -1, 1, 1, 1.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0);
+
+    /**
+     * listener for the items(checkboxes) of the list that repaints the list, if changes took place
+     */
     protected TodoControllerListener<TodoItemController> listener = (TodoItemController list1) -> {
         repaintButtons();
     };
@@ -83,6 +91,9 @@ public class TodoCheckboxList extends JPanel {
         this.repaint();
     }
 
+    /**
+     * removes the listener before the object is destroyed
+     */
     public void onBeforeDestroy() {
         new TodoItemController().removeListener(listener);
     }

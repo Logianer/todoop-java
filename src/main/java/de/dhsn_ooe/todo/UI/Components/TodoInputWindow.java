@@ -9,11 +9,20 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
- * class that represents a input window for a todo item
+ * class that represents a input window for a single todo item
  */
 public class TodoInputWindow extends InputWindow {
 
+    /**
+     * variable that stands for the field displayed to the user for input
+     */
     protected JTextArea area;
+
+    /**
+     * constructs an input window for a todod item
+     * @param action action that will be performed (edit, add...)
+     * @param content content that will be put into the textfield by the user
+     */
     public TodoInputWindow(String action, String content) {
         super("Todo hinzufügen","Beschreibung eingeben:", action);
         area = new JTextArea(content);
@@ -32,10 +41,18 @@ public class TodoInputWindow extends InputWindow {
         JScrollPane pane = new JScrollPane(area);
         setInputBar(pane);
     }
+    
+    /**
+     * constructs an empty window with no content and the heading "Hinzufügen"
+     */
     public TodoInputWindow() {
         this("Hinzufügen", "");
     }
 
+    /**
+     * gets the text that is put into the textfield
+     * @return text of the field
+     */
     public String getTextContent() {
         return area.getText();
     }

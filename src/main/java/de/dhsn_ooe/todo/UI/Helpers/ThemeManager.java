@@ -24,7 +24,7 @@ public class ThemeManager {
 
     /**
      * modifies the default font 
-     * @param newAttributes Attributes that should be changed on the default font
+     * @param newAttributes Attributes that should be changed for the default font
      * @return modified font
      */
     public static Font modifyDefaultFont(Map<TextAttribute, Object> newAttributes) {
@@ -33,6 +33,10 @@ public class ThemeManager {
         return getDefaultFont().deriveFont(attributes);
     }
 
+    /**
+     * lets a button appear transparent
+     * @param button button who's look will be changed
+     */
     public static void setTransparentButton(JButton button) {
         button.setContentAreaFilled(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

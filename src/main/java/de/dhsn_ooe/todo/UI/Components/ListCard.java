@@ -68,9 +68,12 @@ public class ListCard extends JPanel {
     }
 
     /**
-     * creates the action bar (open, edit, delete) for a card
-     * 
-     * @return created bar
+     * creates the top bar of a card with title, back button, edit button, delete button and the right layout
+     * creates a text for hovering over the buttons
+     * adds actionlisteners to the buttons that act on certain changes 
+     * (e.g. window changes to the desired todolist or todonote if the open button is pressed)
+     * adds all the constructed elements to a panel 
+     * @return panel with all elements
      */
     private JPanel createActionBar() {
         JPanel bar = new JPanel();

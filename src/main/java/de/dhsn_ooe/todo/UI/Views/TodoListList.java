@@ -19,7 +19,7 @@ import de.dhsn_ooe.todo.Model.AbstractTodoList;
 import de.dhsn_ooe.todo.UI.Components.ListCard;
 
 /**
- * class that represents the list of the TodoLists in the home menu
+ * class that represents all of the TodoLists in the home menu
  */
 public class TodoListList extends JPanel {
 
@@ -27,18 +27,24 @@ public class TodoListList extends JPanel {
      * layout of the list
      */
     protected GridLayout layout = new GridLayout(0, 3, 10, 10);
+
+    /**
+     * listener for the todolists that acts on triggered events
+     */
     private TodoControllerListener<TodoListController> listListener = (TodoListController list) -> {
         repaintLists();
     };
 
+    /**
+     * listener for the todonotes that acts if events are triggered
+     */
     private TodoControllerListener<TodoNoteController> noteListener = (TodoNoteController list) -> {
         repaintLists();
     };
 
     /**
      * contstructs an empty list with the desired layout
-     * adds listeners to the components to trigger the right events on incoming
-     * changes
+     * adds listeners to the components to trigger the right events on incoming changes
      */
     public TodoListList() {
         super();
@@ -55,6 +61,9 @@ public class TodoListList extends JPanel {
         this.panelResized();
     }
 
+    /**
+     * paints all the todolists and todonotes that are stored in the database on listcards onto the dashboard
+     */
     private void paintLists() {
         List<AbstractTodoList> lists = new ArrayList<>();
         lists.addAll(new TodoListController().getAll());
@@ -86,6 +95,9 @@ public class TodoListList extends JPanel {
         }
     }
 
+    /**
+     * repaints the lists and notes on the dashboard (if changes occured e.g. a list was added)
+     */
     private void repaintLists() {
         this.removeAll();
         this.paintLists();
@@ -106,6 +118,9 @@ public class TodoListList extends JPanel {
         }
     }
 
+    /**
+     * removes the listeners before the object is destroyed
+     */
     public void onBeforeDestroy() {
         new TodoListController().removeListener(listListener);
         new TodoNoteController().removeListener(noteListener);

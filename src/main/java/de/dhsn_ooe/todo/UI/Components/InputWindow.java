@@ -27,8 +27,17 @@ import de.dhsn_ooe.todo.Main;
  */
 public class InputWindow extends JFrame {
 
+    /**
+     * layout of the input window
+     */
     protected BorderLayout layout = new BorderLayout();
+
+
     protected final Container cp = this.getContentPane();
+
+    /**
+     * message that is displayed in the window
+     */
     protected String message;
     protected JComponent input;
     protected String action;

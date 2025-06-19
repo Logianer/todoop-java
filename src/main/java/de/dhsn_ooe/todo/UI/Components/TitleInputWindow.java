@@ -13,10 +13,13 @@ import javax.swing.JTextField;
  */
 public class TitleInputWindow extends InputWindow {
 
+    /**
+     * textfield that the user can put text into
+     */
     protected JTextField inputField;
 
     /**
-     * constructs a title input window
+     * constructs an empty title input window with the message "Name der neuen Liste eingeben:"
      */
     public TitleInputWindow() {
         this("Name der neuen Liste eingeben:", "Hinzufügen", "");
@@ -52,10 +55,17 @@ public class TitleInputWindow extends InputWindow {
         setInputBar(inputField);
     }
 
+    /**
+     * gets the content of the textfield 
+     * @return string content of the textfield
+     */
     public String getTextContent() {
         return inputField.getText();
     }
 
+    /**
+     * gets the contraints for the layout of the inputwindow
+     */
     @Override
     protected GridBagConstraints getInputConstraints() {
         GridBagConstraints c = new GridBagConstraints();

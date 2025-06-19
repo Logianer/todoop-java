@@ -46,10 +46,10 @@ public class GenericDBQuery {
     }
 
     /**
-     * selects all entrys whos colums have the given 
-     * @param table
-     * @param column
-     * @param value
+     *  
+     * @param table table that the entrys will be selected from
+     * @param column name of the column
+     * @param value 
      * @return
      * @throws SQLException
      */

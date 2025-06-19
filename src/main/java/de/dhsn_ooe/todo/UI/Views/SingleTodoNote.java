@@ -24,15 +24,14 @@ import de.dhsn_ooe.todo.UI.Helpers.ThemeManager;
 public class SingleTodoNote extends JPanel {
     
     /**
-     * layout of the list
+     * layout of the note
      */
     protected BorderLayout layout = new BorderLayout();
     private TodoNote note;
     private JTextArea area;
 
     /**
-     * constructs a list with the given elements, a top bar and the layout of the
-     * panel
+     * constructs a note with the given elements, a top bar and the layout of the panel
      */
     public SingleTodoNote(TodoNote note) {
         super();
@@ -48,8 +47,11 @@ public class SingleTodoNote extends JPanel {
     }
 
     /**
-     * creates the top bar of the list with a title and a back button
-     * 
+     * creates the top bar of the note with title, back button, save button and the right layout
+     * creates a text for hovering over the buttons
+     * adds actionlisteners to the buttons that act on certain changes 
+     * (e.g. window changes back to the dashboard if back button is pressed)
+     * adds all the constructed elements to a panel 
      * @return panel with all elements
      */
     private JPanel createTopBar() {
