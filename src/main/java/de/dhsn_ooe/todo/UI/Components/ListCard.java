@@ -4,9 +4,12 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.Collections;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -22,6 +25,7 @@ import de.dhsn_ooe.todo.Controller.TodoNoteController;
 import de.dhsn_ooe.todo.Events.WindowManager;
 import de.dhsn_ooe.todo.Model.AbstractTodoList;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
+import de.dhsn_ooe.todo.Model.TodoItem;
 import de.dhsn_ooe.todo.Model.TodoNote;
 import de.dhsn_ooe.todo.UI.Views.SingleTodoList;
 import de.dhsn_ooe.todo.UI.Views.SingleTodoNote;
@@ -63,16 +67,27 @@ public class ListCard extends JPanel {
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.weightx = 1.0;
         c.weighty = 1.0;
-        this.add(new JLabel("PREVIEW"), c);
+        switch (list) {
+            case TodoCheckList l:
+                this.add(createListPreview(), c);
+                break;
+            case TodoNote n:
+                this.add(createNotePreview(), c);
+            default:
+                break;
+        }
 
     }
 
     /**
-     * creates the top bar of a card with title, back button, edit button, delete button and the right layout
+     * creates the top bar of a card with title, back button, edit button, delete
+     * button and the right layout
      * creates a text for hovering over the buttons
-     * adds actionlisteners to the buttons that act on certain changes 
-     * (e.g. window changes to the desired todolist or todonote if the open button is pressed)
-     * adds all the constructed elements to a panel 
+     * adds actionlisteners to the buttons that act on certain changes
+     * (e.g. window changes to the desired todolist or todonote if the open button
+     * is pressed)
+     * adds all the constructed elements to a panel
+     * 
      * @return panel with all elements
      */
     private JPanel createActionBar() {
@@ -123,7 +138,8 @@ public class ListCard extends JPanel {
                 WindowManager.changeWindow(new SingleTodoList((TodoCheckList) list),
                         "Todo-App | \"" + list.getTitle() + "\"");
             } else if (list.getType() == TodoNote.TYPE) {
-                WindowManager.changeWindow(new SingleTodoNote((TodoNote) list), "Todo-App | \"" + list.getTitle() + "\"");
+                WindowManager.changeWindow(new SingleTodoNote((TodoNote) list),
+                        "Todo-App | \"" + list.getTitle() + "\"");
             }
         });
         editButton.addActionListener(e -> {
@@ -147,5 +163,36 @@ public class ListCard extends JPanel {
             }
         });
         return bar;
+    }
+
+    private JComponent createListPreview() {
+        JLabel preview = new JLabel();
+        List<TodoItem> items = new TodoListController().getRelatedItems((TodoCheckList) list);
+        Collections.sort(items);
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < Integer.min(5, items.size()); i++) {
+            TodoItem item = items.get(i);
+            String todoState = item.getState() ? "◉" : "◎";
+            sb.append(todoState + " " + item.getStringContent() + "<br>");
+        }
+        if (items.isEmpty()) {
+            sb.append("<i>Leere Liste</i>");
+        } else if (items.size() > 5) {
+            sb.append("<i>+" + (items.size() - 5) + " mehr</i>");
+        }
+        preview.setText("<html>" + sb.toString() + "</html>");
+        return preview;
+    }
+
+    private JComponent createNotePreview() {
+        JLabel preview = new JLabel();
+        String content = ((TodoNote) list).getContent();
+        if (content != null) {
+            preview.setText(content.strip().substring(0, Integer.min(content.length(), 100)) + "...");
+        } else {
+            preview.setText("<html><i>Leere Notiz</i></html>");
+        }
+        return preview;
     }
 }

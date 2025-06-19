@@ -3,7 +3,7 @@ package de.dhsn_ooe.todo.UI.Components;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -28,13 +28,14 @@ public class TodoCheckboxList extends JPanel {
     protected TodoCheckList list;
 
     /**
-     * gridbaglayout of the checkboxlist 
+     * gridbaglayout of the checkboxlist
      */
     private final GridBagConstraints defaultConstraints = new GridBagConstraints(0, -1, 1, 1, 1.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0);
 
     /**
-     * listener for the items(checkboxes) of the list that repaints the list, if changes took place
+     * listener for the items(checkboxes) of the list that repaints the list, if
+     * changes took place
      */
     protected TodoControllerListener<TodoItemController> listener = (TodoItemController list1) -> {
         repaintButtons();
@@ -59,20 +60,12 @@ public class TodoCheckboxList extends JPanel {
      * of the item
      */
     public final void paintButtons() {
-        List<TodoItem> selectedItems = new ArrayList<>();
         List<TodoItem> items;
         items = new TodoListController().getRelatedItems(list);
+        Collections.sort(items);
         for (TodoItem item : items) {
-            if (item.getState() == true) {
-                selectedItems.add(item);
-            } else {
-                this.add(new SingleTodoItem(item), defaultConstraints);
-            }
-        }
-        for (TodoItem item : selectedItems) {
             this.add(new SingleTodoItem(item), defaultConstraints);
         }
-
         // Add an element that takes up all the remaining space.
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;

@@ -44,7 +44,8 @@ public class TodoListList extends JPanel {
 
     /**
      * contstructs an empty list with the desired layout
-     * adds listeners to the components to trigger the right events on incoming changes
+     * adds listeners to the components to trigger the right events on incoming
+     * changes
      */
     public TodoListList() {
         super();
@@ -62,7 +63,8 @@ public class TodoListList extends JPanel {
     }
 
     /**
-     * paints all the todolists and todonotes that are stored in the database on listcards onto the dashboard
+     * paints all the todolists and todonotes that are stored in the database on
+     * listcards onto the dashboard
      */
     private void paintLists() {
         List<AbstractTodoList> lists = new ArrayList<>();
@@ -72,13 +74,13 @@ public class TodoListList extends JPanel {
         if (lists.isEmpty()) {
             this.setLayout(new BorderLayout());
             JLabel hintText = new JLabel(
-                "<html>Noch keine Todo's vorhanden. <br>Füge eine Liste mit den Buttons oben rechts hinzu.</html>");
+                    "<html>Noch keine Todo's vorhanden. <br>Füge eine Liste mit den Buttons oben rechts hinzu.</html>");
             hintText.setHorizontalAlignment(JLabel.CENTER);
             this.add(hintText);
         } else {
             this.setLayout(layout);
         }
-        Collections.sort(lists, new Comparator<AbstractTodoList>() {
+        Collections.sort(lists, Collections.reverseOrder(new Comparator<AbstractTodoList>() {
             @Override
             public int compare(AbstractTodoList o1, AbstractTodoList o2) {
                 int timeCompare = o1.getLastUpdated().compareTo(o2.getLastUpdated());
@@ -88,7 +90,7 @@ public class TodoListList extends JPanel {
                 }
                 return timeCompare;
             }
-        });
+        }));
         for (AbstractTodoList list : lists) {
             ListCard card = new ListCard(list);
             this.add(card);
@@ -96,7 +98,8 @@ public class TodoListList extends JPanel {
     }
 
     /**
-     * repaints the lists and notes on the dashboard (if changes occured e.g. a list was added)
+     * repaints the lists and notes on the dashboard (if changes occured e.g. a list
+     * was added)
      */
     private void repaintLists() {
         this.removeAll();

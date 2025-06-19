@@ -1,14 +1,18 @@
 package de.dhsn_ooe.todo.Model;
 
+import java.sql.Timestamp;
+
 /**
  * class that represents a single item of the TodoList
  */
-public class TodoItem {
+public class TodoItem implements Comparable<TodoItem> {
 
     private int id;
     private String stringContent = "";
     private boolean doneState = false;
     private final TodoCheckList parentList;
+    private Timestamp lastUpdated;
+
     /**
      * constructor for a empty TodoItem
      */
@@ -71,4 +75,23 @@ public class TodoItem {
         return this.parentList;
     }
 
+    public Timestamp getLastUpdated() {
+        if (lastUpdated == null) {
+            lastUpdated = new Timestamp(0);
+        }
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Timestamp lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public int compareTo(TodoItem o2) {
+        boolean stateCompare = getState() == o2.getState();
+        int timeCompare = o2.getLastUpdated().compareTo(getLastUpdated());
+        if (stateCompare) {
+            return timeCompare * (getState() ? 1 : -1);
+        }
+        return getState() ? 1 : -1;
+    }
 }

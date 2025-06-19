@@ -48,6 +48,8 @@ public class TodoItemController implements CRUDController<TodoItem> {
 
     @Override
     public int create(TodoItem object) {
+        // Update the list -> just change the updated_at timestamp in the database
+        new TodoListController().update(object.getList(), object.getList().getId());
         try {
             int id = GenericDBQuery.insertRecord("todo_item", Map.of("checked", object.getState() ? 1 : 0, "list_id",
                     object.getList().getId(), "content", object.getStringContent()));
@@ -71,6 +73,7 @@ public class TodoItemController implements CRUDController<TodoItem> {
             newItem.setId(id);
             newItem.setState(result.getInt("checked") == 1);
             newItem.setStringContent(result.getString("content"));
+            newItem.setLastUpdated(result.getTimestamp("updated_at"));
             return newItem;
         } catch (SQLException e) {
             e.printStackTrace(System.err);
@@ -83,9 +86,11 @@ public class TodoItemController implements CRUDController<TodoItem> {
     @Override
     public boolean update(TodoItem object, int id) {
         PreparedStatement query;
+        // Update the list -> just change the updated_at timestamp in the database
+        new TodoListController().update(object.getList(), object.getList().getId());
         try {
             query = SQLiteDB.conn
-                    .prepareStatement("UPDATE todo_item SET checked = ?, content = ? where item_id = ?");
+                    .prepareStatement("UPDATE todo_item SET checked = ?, content = ?, updated_at = CURRENT_TIMESTAMP where item_id = ?");
             query.setInt(1, object.getState() ? 1 : 0);
             query.setString(2, object.getStringContent());
             query.setInt(3, object.getId());
@@ -100,6 +105,8 @@ public class TodoItemController implements CRUDController<TodoItem> {
 
     @Override
     public boolean delete(TodoItem object) {
+        // Update the list -> just change the updated_at timestamp in the database
+        new TodoListController().update(object.getList(), object.getList().getId());
         try {
             PreparedStatement query = SQLiteDB.conn
                     .prepareStatement("DELETE FROM todo_item where item_id = ?");
@@ -131,6 +138,7 @@ public class TodoItemController implements CRUDController<TodoItem> {
                     try {
                         newItem.setId(results.getInt("item_id"));
                         newItem.setStringContent(results.getString("content"));
+                        newItem.setLastUpdated(results.getTimestamp("updated_at"));
                     } catch (SQLException e) {
                         e.printStackTrace(System.err);
                     }

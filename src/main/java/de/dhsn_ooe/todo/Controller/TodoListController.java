@@ -68,6 +68,7 @@ public class TodoListController
             ResultSet results = query.executeQuery();
             TodoCheckList list = new TodoCheckList(results.getString("title"));
             list.setId(results.getInt("list_id"));
+            list.setLastUpdated(results.getTimestamp("updated_at"));
             return list;
         } catch (SQLException e) {
             throw new ItemNotFoundException(id);
@@ -78,7 +79,7 @@ public class TodoListController
     public boolean update(TodoCheckList object, int id) {
         try {
             PreparedStatement query = SQLiteDB.conn
-                    .prepareStatement("UPDATE todo_list set title = ? where list_id = ?");
+                    .prepareStatement("UPDATE todo_list set title = ?, updated_at = CURRENT_TIMESTAMP where list_id = ?");
             query.setString(1, object.getTitle());
             query.setInt(2, id);
             query.executeUpdate();
@@ -113,6 +114,7 @@ public class TodoListController
             while (results.next()) {
                 TodoCheckList newList = new TodoCheckList(results.getString("title"));
                 newList.setId(results.getInt("list_id"));
+                newList.setLastUpdated(results.getTimestamp("updated_at"));
                 lists.add(newList);
             }
         } catch (SQLException e) {
@@ -133,6 +135,7 @@ public class TodoListController
                 item.setId(results.getInt("item_id"));
                 item.setState(results.getInt("checked") == 1);
                 item.setStringContent(results.getString("content"));
+                item.setLastUpdated(results.getTimestamp("updated_at"));
                 items.add(item);
             }
         } catch (SQLException e) {

@@ -15,7 +15,7 @@ public class SQLiteDB {
             Statement query = conn.createStatement();
             query.executeUpdate("PRAGMA foreign_keys = ON;");
             query.executeUpdate(
-                    "CREATE TABLE IF NOT EXISTS todo_list (list_id INTEGER PRIMARY KEY, title TEXT, list_type INT NOT NULL);");
+                    "CREATE TABLE IF NOT EXISTS todo_list (list_id INTEGER PRIMARY KEY, title TEXT, list_type INT NOT NULL, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP);");
             query.executeUpdate("CREATE TABLE IF NOT EXISTS todo_note (\n" + //
                     "    note_id INTEGER PRIMARY KEY,\n" + //
                     "    content TEXT,\n" + //
@@ -31,6 +31,7 @@ public class SQLiteDB {
                     "    checked INT NOT NULL,\n" + //
                     "    content TEXT,\n" + //
                     "    list_id INT,\n" + //
+                    "    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP, \n" +
                     "    FOREIGN KEY (list_id)\n" + //
                     "        REFERENCES todo_list (list_id)\n" + //
                     "            ON UPDATE RESTRICT\n" + //

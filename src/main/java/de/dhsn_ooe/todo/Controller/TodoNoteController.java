@@ -70,6 +70,7 @@ public class TodoNoteController
             ResultSet results = query.executeQuery();
             TodoNote list = new TodoNote(results.getString("title"));
             list.setId(results.getInt("list_id"));
+            list.setLastUpdated(results.getTimestamp("updated_at"));
             return list;
         } catch (SQLException e) {
             throw new ItemNotFoundException(id);
@@ -81,7 +82,7 @@ public class TodoNoteController
         try {
             PreparedStatement query = SQLiteDB.conn
                     .prepareStatement(
-                            "UPDATE todo_list set title = ? where list_id = ?");
+                            "UPDATE todo_list set title = ?, updated_at = CURRENT_TIMESTAMP where list_id = ?");
             PreparedStatement query2 = SQLiteDB.conn
                     .prepareStatement("UPDATE todo_note set content = ? where list_id = ?");
             query.setString(1, object.getTitle());
@@ -122,6 +123,7 @@ public class TodoNoteController
                 TodoNote newList = new TodoNote(results.getString("title"));
                 newList.setId(results.getInt("list_id"));
                 newList.setContent(getNoteRecord(newList));
+                newList.setLastUpdated(results.getTimestamp("updated_at"));
                 lists.add(newList);
             }
         } catch (SQLException e) {
