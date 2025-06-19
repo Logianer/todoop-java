@@ -2,6 +2,7 @@ package de.dhsn_ooe.todo.UI.Components;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -34,11 +35,17 @@ public class TitleInputWindow extends InputWindow {
         inputField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                super.keyReleased(e);
                 if (inputField.getText().isBlank()) {
                     setButtonEnabled(false);
                 } else {
                     setButtonEnabled(true);
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    fireActionEvent(new ActionEvent(e, 0, null));
                 }
             }
         });

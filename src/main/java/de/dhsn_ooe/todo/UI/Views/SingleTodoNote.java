@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.UIManager;
 
 import org.kordamp.ikonli.materialdesign2.MaterialDesignA;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignC;
@@ -62,22 +63,22 @@ public class SingleTodoNote extends JPanel {
         saveButton.setMargin(new Insets(5, 5, 5, 5));
         saveButton.setToolTipText("Speichern");
         backButton.setIcon(
-                FontIcon.of(MaterialDesignA.ARROW_LEFT, 24, ThemeManager.getDefaults().getColor("textText")));
+                FontIcon.of(MaterialDesignA.ARROW_LEFT, 24, UIManager.getColor("Label.foreground")));
         ThemeManager.setTransparentButton(backButton);
         backButton.addActionListener(e -> {
             WindowManager.changeWindow(new Dashboard(), "Todo-App | Start");
         });
         saveButton.setIcon(
-                FontIcon.of(MaterialDesignC.CONTENT_SAVE, 24, ThemeManager.getDefaults().getColor("textText")));
+                FontIcon.of(MaterialDesignC.CONTENT_SAVE, 24, UIManager.getColor("Label.foreground")));
         ThemeManager.setTransparentButton(saveButton);
 
         saveButton.addActionListener(e -> {
             saveButton.setEnabled(false);
-            saveButton.setForeground(ThemeManager.getDefaults().getColor("textInactiveText"));
+            saveButton.setForeground(UIManager.getColor("textInactiveText"));
             note.setContent(area.getText());
             new TodoNoteController().update(note, note.getId());
             saveButton.setEnabled(true);
-            saveButton.setForeground(ThemeManager.getDefaults().getColor("textText"));
+            saveButton.setForeground(UIManager.getColor("Label.foreground"));
 
         });
 

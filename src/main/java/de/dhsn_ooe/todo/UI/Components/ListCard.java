@@ -10,6 +10,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 
 import org.kordamp.ikonli.materialdesign2.MaterialDesignD;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignF;
@@ -23,7 +24,6 @@ import de.dhsn_ooe.todo.Events.WindowManager;
 import de.dhsn_ooe.todo.Model.AbstractTodoList;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoNote;
-import de.dhsn_ooe.todo.UI.Helpers.ThemeManager;
 import de.dhsn_ooe.todo.UI.Views.SingleTodoList;
 import de.dhsn_ooe.todo.UI.Views.SingleTodoNote;
 
@@ -54,7 +54,7 @@ public class ListCard extends JPanel {
         c.anchor = GridBagConstraints.PAGE_START;
         c.gridy = 0;
 
-        this.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+        this.setBorder(BorderFactory.createLineBorder(UIManager.getColor("textInactiveText"), 1));
         this.add(createActionBar(), c);
         c = new GridBagConstraints();
         c.anchor = GridBagConstraints.NORTHWEST;
@@ -86,10 +86,10 @@ public class ListCard extends JPanel {
         // set Icon depending on List Type
         if (list.getType() == TodoCheckList.TYPE) {
             listName.setIcon(FontIcon.of(MaterialDesignF.FORMAT_LIST_CHECKS, 24,
-                    ThemeManager.getDefaults().getColor("textInactiveText")));
+                    UIManager.getColor("textInactiveText")));
         } else if (list.getType() == TodoNote.TYPE) {
             listName.setIcon(FontIcon.of(MaterialDesignF.FILE_DOCUMENT_OUTLINE, 24,
-                    ThemeManager.getDefaults().getColor("textInactiveText")));
+                    UIManager.getColor("textInactiveText")));
         }
         GridBagConstraints btnC = new GridBagConstraints();
         btnC.fill = GridBagConstraints.HORIZONTAL;
@@ -98,16 +98,16 @@ public class ListCard extends JPanel {
         btnC.gridy = 0;
         JButton deleteButton = new JButton();
         deleteButton.setIcon(
-                FontIcon.of(MaterialDesignD.DELETE, 16, ThemeManager.getDefaults().getColor("Label.foreground")));
+                FontIcon.of(MaterialDesignD.DELETE, 16, UIManager.getColor("Label.foreground")));
         deleteButton.setToolTipText("Liste löschen");
         JButton editButton = new JButton();
         editButton.setIcon(
-                FontIcon.of(MaterialDesignP.PENCIL, 16, ThemeManager.getDefaults().getColor("Label.foreground")));
+                FontIcon.of(MaterialDesignP.PENCIL, 16, UIManager.getColor("Label.foreground")));
         editButton.setToolTipText("Titel bearbeiten");
 
         JButton openButton = new JButton();
         openButton.setIcon(
-                FontIcon.of(MaterialDesignO.OPEN_IN_NEW, 16, ThemeManager.getDefaults().getColor("Label.foreground")));
+                FontIcon.of(MaterialDesignO.OPEN_IN_NEW, 16, UIManager.getColor("Label.foreground")));
         openButton.setToolTipText("Liste öffnen");
 
         bar.add(listName, labelC);

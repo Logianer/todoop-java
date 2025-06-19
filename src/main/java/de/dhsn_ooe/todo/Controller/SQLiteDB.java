@@ -13,7 +13,7 @@ public class SQLiteDB {
             conn = DriverManager.getConnection("jdbc:sqlite:storage.db");
 
             Statement query = conn.createStatement();
-
+            query.executeUpdate("PRAGMA foreign_keys = ON;");
             query.executeUpdate(
                     "CREATE TABLE IF NOT EXISTS todo_list (list_id INTEGER PRIMARY KEY, title TEXT, list_type INT NOT NULL);");
             query.executeUpdate("CREATE TABLE IF NOT EXISTS todo_note (\n" + //

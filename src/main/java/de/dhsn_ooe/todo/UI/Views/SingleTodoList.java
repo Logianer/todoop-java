@@ -7,6 +7,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.UIManager;
+
 import org.kordamp.ikonli.materialdesign2.MaterialDesignA;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
 import org.kordamp.ikonli.swing.FontIcon;
@@ -66,14 +68,14 @@ public class SingleTodoList extends JPanel {
         addButton.setMargin(new Insets(5, 5, 5, 5));
         addButton.setToolTipText("Item hinzufügen");
         backButton.setIcon(
-                FontIcon.of(MaterialDesignA.ARROW_LEFT, 24, ThemeManager.getDefaults().getColor("Label.foreground")));
+                FontIcon.of(MaterialDesignA.ARROW_LEFT, 24, UIManager.getColor("Label.foreground")));
         ThemeManager.setTransparentButton(backButton);
         backButton.addActionListener(e -> {
             listDisplay.onBeforeDestroy();
             WindowManager.changeWindow(new Dashboard(), "Todo-App | Start");
         });
         addButton.setIcon(
-                FontIcon.of(MaterialDesignP.PLUS, 24, ThemeManager.getDefaults().getColor("Label.foreground")));
+                FontIcon.of(MaterialDesignP.PLUS, 24, UIManager.getColor("Label.foreground")));
         ThemeManager.setTransparentButton(addButton);
 
         addButton.addActionListener(e -> {

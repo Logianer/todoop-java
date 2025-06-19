@@ -7,9 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JButton;
-import javax.swing.UIDefaults;
-
-import com.formdev.flatlaf.FlatLaf;
+import javax.swing.UIManager;
 
 /**
  * class that manages the overall theme of the app (fonts etc.)
@@ -17,32 +15,11 @@ import com.formdev.flatlaf.FlatLaf;
 public class ThemeManager {
 
     /**
-     * theme
-     */
-    protected static FlatLaf theme;
-
-    /**
-     * sets the theme of the list
-     * @param theme theme that should be set
-     */
-    public static void setTheme(FlatLaf theme) {
-        ThemeManager.theme = theme;
-    }
-
-    /**
-     * gets the defaults of the Ui and returns them
-     * @return default values of the Ui
-     */
-    public static UIDefaults getDefaults() {
-        return theme.getDefaults();
-    }
-
-    /**
      * gets the default font used on a label
      * @return default font
      */
     public static Font getDefaultFont() {
-        return theme.getDefaults().getFont("Label.font");
+        return UIManager.getDefaults().getFont("RootPane.font");
     }
 
     /**
@@ -57,10 +34,7 @@ public class ThemeManager {
     }
 
     public static void setTransparentButton(JButton button) {
-        button.setContentAreaFilled(false); // Hintergrund transparent
-        button.setBorderPainted(false); // Keine Umrandung
-        button.setFocusPainted(false); // Kein Fokusrahmen
-        button.setOpaque(false);
+        button.setContentAreaFilled(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 }

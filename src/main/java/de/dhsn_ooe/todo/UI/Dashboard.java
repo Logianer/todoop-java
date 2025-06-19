@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.UIManager;
 
 import org.kordamp.ikonli.materialdesign2.MaterialDesignF;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
@@ -61,20 +62,23 @@ public class Dashboard extends JPanel {
 
     private JPanel createTopBar() {
         JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
         JLabel title = new Title("Todo-App");
         JButton addButton = new JButton();
         JButton addNoteButton = new JButton();
-        //panel.setLayout(new BorderLayout());
-        addButton.setMargin(new Insets(5, 5, 5, 5));
-        addNoteButton.setMargin(addButton.getMargin());
         addButton.setIcon(
-                FontIcon.of(MaterialDesignP.PLAYLIST_PLUS, 24, ThemeManager.getDefaults().getColor("Label.foreground")));
-        addNoteButton.setIcon(FontIcon.of(MaterialDesignF.FILE_PLUS, 24, ThemeManager.getDefaults().getColor("Label.foreground")));
+                FontIcon.of(MaterialDesignP.PLAYLIST_PLUS, 24,
+                        UIManager.getColor("Label.foreground")));
+        addButton.setToolTipText("Neue Todo-Liste");
+        addNoteButton.setIcon(
+                FontIcon.of(MaterialDesignF.FILE_PLUS, 24, UIManager.getColor("Label.foreground")));
+        addNoteButton.setToolTipText("Neue Notiz");
+
         ThemeManager.setTransparentButton(addButton);
         ThemeManager.setTransparentButton(addNoteButton);
         addButton.addActionListener(e -> {
             TitleInputWindow window = new TitleInputWindow();
-            
+
             window.addActionListener(l -> {
                 TodoCheckList newList = new TodoCheckList(window.getTextContent());
                 new TodoListController().create(newList);
@@ -84,7 +88,7 @@ public class Dashboard extends JPanel {
 
         addNoteButton.addActionListener(e -> {
             TitleInputWindow window = new TitleInputWindow();
-            
+
             window.addActionListener(l -> {
                 TodoNote newList = new TodoNote(window.getTextContent());
                 new TodoNoteController().create(newList);
@@ -92,9 +96,18 @@ public class Dashboard extends JPanel {
             });
         });
 
-        panel.add(title);
-        panel.add(addButton);
-        panel.add(addNoteButton);
+        GridBagConstraints c = new GridBagConstraints();
+        c.weightx = 1;
+        c.gridy = 0;
+        c.gridx = 0;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.insets = new Insets(0, 80, 0, 0);
+        panel.add(title, c);
+        c = new GridBagConstraints();
+        c.gridy = 0;
+        c.insets = new Insets(5, 5, 5, 5);
+        panel.add(addButton, c);
+        panel.add(addNoteButton, c);
         return panel;
     }
 }

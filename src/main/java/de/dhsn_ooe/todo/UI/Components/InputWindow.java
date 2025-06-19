@@ -34,7 +34,7 @@ public class InputWindow extends JFrame {
     protected String action;
     protected JButton actionButton;
     private List<ActionListener> listeners = new ArrayList<>();
-    
+
     private final KeyAdapter keyListener = new KeyAdapter() {
         @Override
         public void keyPressed(KeyEvent e) {
@@ -52,6 +52,7 @@ public class InputWindow extends JFrame {
         this.action = action;
         this.message = message;
         this.setTitle(title);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.weightx = 1;
@@ -109,6 +110,7 @@ public class InputWindow extends JFrame {
     public void addActionListener(ActionListener l) {
         listeners.add(l);
     }
+
     public void removeActionListener(ActionListener l) {
         listeners.remove(l);
     }
@@ -123,7 +125,8 @@ public class InputWindow extends JFrame {
     }
 
     protected void setButtonEnabled(boolean state) {
-        if (actionButton.isEnabled() == state) return;
+        if (actionButton.isEnabled() == state)
+            return;
         actionButton.setEnabled(state);
     }
 }

@@ -1,14 +1,17 @@
 package de.dhsn_ooe.todo.UI;
 
+import java.awt.Color;
 import java.awt.Container;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.UIManager;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.intellijthemes.FlatCyanLightIJTheme;
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.*;
 
 import de.dhsn_ooe.todo.Events.WindowManager;
-import de.dhsn_ooe.todo.UI.Helpers.ThemeManager;
 
 /**
  * class that represents the main frame of the app
@@ -30,8 +33,8 @@ public class MainFrame extends JFrame {
      */
     public MainFrame() {
         super();
-        FlatLightLaf.setup();
-        ThemeManager.setTheme(new FlatLightLaf());
+        FlatCyanLightIJTheme.setup();
+        UIManager.put("MenuBar.background", Color.RED);
         this.setSize(800, 600);
         this.setTitle("Todo-App | Start");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

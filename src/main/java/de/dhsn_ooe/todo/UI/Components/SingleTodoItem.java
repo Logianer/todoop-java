@@ -9,6 +9,7 @@ import java.awt.event.ItemEvent;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 
 import org.kordamp.ikonli.materialdesign2.MaterialDesignD;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
@@ -16,7 +17,6 @@ import org.kordamp.ikonli.swing.FontIcon;
 
 import de.dhsn_ooe.todo.Controller.TodoItemController;
 import de.dhsn_ooe.todo.Model.TodoItem;
-import de.dhsn_ooe.todo.UI.Helpers.ThemeManager;
 
 public class SingleTodoItem extends JPanel {
 
@@ -30,18 +30,18 @@ public class SingleTodoItem extends JPanel {
         this.setPreferredSize(new Dimension(100, 50));
         
         JButton deleteButton = new JButton();
-        deleteButton.setIcon(FontIcon.of(MaterialDesignD.DELETE, 16, ThemeManager.getDefaults().getColor("Label.foreground")));
+        deleteButton.setIcon(FontIcon.of(MaterialDesignD.DELETE, 16, UIManager.getColor("Label.foreground")));
         deleteButton.setToolTipText("Item löschen");
 
         JButton editButton = new JButton();
-        editButton.setIcon(FontIcon.of(MaterialDesignP.PENCIL,16,ThemeManager.getDefaults().getColor("Label.foreground")));
+        editButton.setIcon(FontIcon.of(MaterialDesignP.PENCIL,16,UIManager.getColor("Label.foreground")));
         editButton.setToolTipText("Item bearbeiten");
 
 
         if (item.getState()) {
             checkbox.setText("<html><s>" + item.getStringContent() + "</s></html>");
             checkbox.setSelected(true);
-            checkbox.setForeground(ThemeManager.getDefaults().getColor("textInactiveText"));
+            editButton.setIcon(FontIcon.of(MaterialDesignP.PENCIL, 16, UIManager.getColor("textInactiveText")));
             editButton.setEnabled(false);
             editButton.setToolTipText("Item bearbeiten (gesperrt)");
         } else {
