@@ -7,10 +7,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.intellijthemes.FlatCyanLightIJTheme;
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.*;
-
 import de.dhsn_ooe.todo.Events.WindowManager;
 
 /**
