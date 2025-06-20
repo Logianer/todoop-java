@@ -18,7 +18,7 @@ public class Main {
         /**
          * The starting point of the application
          * 
-         * @param args 
+         * @param args a list of the command line arguments that this executable was called with
          */
         public static void main(String[] args) {
                 SQLiteDB.init();

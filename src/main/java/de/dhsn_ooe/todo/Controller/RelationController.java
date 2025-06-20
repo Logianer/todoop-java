@@ -5,6 +5,8 @@ import java.util.List;
 
 /**
  * class that represents the relation between the objects of the todoapp
+ * @param <T> The "parent" Item Model
+ * @param <E> The Related Item Model
  */
 public interface RelationController<E, T> {
 

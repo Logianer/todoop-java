@@ -43,7 +43,7 @@ public class GenericDBQuery {
     }
 
     /**
-     * selects all entrys of a table
+     * selects all entries of a table
      * @param table table that the entrys will be selected from
      * @return the result of the query (all entrys of the given table)
      * @throws SQLException exception that will be trown if the query fails
@@ -54,11 +54,11 @@ public class GenericDBQuery {
     }
 
     /**
-     *  
+     * filters and returns all table records that have a column-value equal to the specified value 
      * @param table table that the entrys will be selected from
-     * @param column name of the column
-     * @param value 
-     * @return
+     * @param column name of the column to filter for
+     * @param value the value to filter for
+     * @return The ResultSet containing a subset of all records from the specified table that match the specified condition
      * @throws SQLException exception that occurs if the query fails
      */
     public static ResultSet selectWhereEqualsRecords(String table, String column, Integer value) throws SQLException {

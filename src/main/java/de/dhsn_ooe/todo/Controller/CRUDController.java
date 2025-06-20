@@ -7,13 +7,14 @@ import de.dhsn_ooe.todo.Exception.OrphanedRelationException;
 
 /**
  * controller for the actions delete, update, create and read (getbyid and getall)
+ * @param <E> The Class to apply the CRUD principle to. In the MVC-architecture, E will almost always me a Model.
  */
 public interface CRUDController<E> {
 
     /**
      * creates an object
      * @param object object that will be created
-     * @return
+     * @return a positive integer representing the unique id of the created record in the databse for later reference. If zero is returned, the object was not created.
      */
     public int create(E object);
 

@@ -203,10 +203,12 @@ public class ListCard extends JPanel {
     private JComponent createNotePreview() {
         JLabel preview = new JLabel();
         String content = ((TodoNote) list).getContent();
-        if (content.isBlank() != true) {
-            preview.setText(content.strip().substring(0, Integer.min(content.length(), 100)) + "...");
-        } else {
+        if (content == null || content.isBlank()) {
             preview.setText("<html><i>Leere Notiz</i></html>");
+        } else if (content.length() < 100) {
+            preview.setText(content);
+        } else {
+            preview.setText(content.substring(0, 100) + "...");
         }
         return preview;
     }
