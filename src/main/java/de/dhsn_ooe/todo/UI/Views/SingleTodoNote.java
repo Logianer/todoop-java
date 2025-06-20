@@ -21,17 +21,29 @@ import de.dhsn_ooe.todo.UI.Components.Title;
 import de.dhsn_ooe.todo.UI.Dashboard;
 import de.dhsn_ooe.todo.UI.Helpers.ThemeManager;
 
+/**
+ * class that represents a single todonote with the right layout
+ */
 public class SingleTodoNote extends JPanel {
     
     /**
      * layout of the note
      */
     protected BorderLayout layout = new BorderLayout();
+
+    /**
+     * note that is displayed
+     */
     private TodoNote note;
+
+    /**
+     * textfield for editing the note
+     */
     private JTextArea area;
 
     /**
      * constructs a note with the given elements, a top bar and the layout of the panel
+     * @param note note the data should be displayed from
      */
     public SingleTodoNote(TodoNote note) {
         super();

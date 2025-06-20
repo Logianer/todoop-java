@@ -5,9 +5,23 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+
+/**
+ * class that represents the database for the todoapp 
+ * creates tables for todonotes, todoitems and todolists, with all attributes needed for persistence
+ */
+
 public class SQLiteDB {
+
+    /**
+     * connection to the database
+     */
     static Connection conn;
 
+    /**
+     * initiates the database with all tables and their attributes if they do not exist
+     * if an exception occurs an error will be shown
+     */
     static public void init() {
         try {
             conn = DriverManager.getConnection("jdbc:sqlite:storage.db");

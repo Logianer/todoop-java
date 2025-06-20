@@ -5,7 +5,14 @@ package de.dhsn_ooe.todo.Model;
  */
 public class TodoNote extends AbstractTodoList {
 
+    /**
+     * content of the todonote
+     */
     private String noteContent;
+
+    /**
+     * type of the list (for distinction between note and checklist)
+     */
     public static final int TYPE = 2;
 
     /**
@@ -32,6 +39,9 @@ public class TodoNote extends AbstractTodoList {
         this.noteContent = htmlContent;
     }
 
+    /**
+     * gets the type of the list
+     */
     @Override
     public int getType() {
         return TYPE;

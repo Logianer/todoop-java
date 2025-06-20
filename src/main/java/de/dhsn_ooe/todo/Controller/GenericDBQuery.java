@@ -3,8 +3,6 @@ package de.dhsn_ooe.todo.Controller;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Map;
 
@@ -13,6 +11,14 @@ import java.util.Map;
  * class that handles the querys in the database
  */
 public class GenericDBQuery {
+
+    /**
+     * inserts a record into a table
+     * @param table table that the record should be inserted into
+     * @param args arguments that the object (record) has 
+     * @return id of the inserted object
+     * @throws SQLException exception the occurs if the inserting process into the database fails
+     */
     public static int insertRecord(String table, Map<String, Object> args) throws SQLException {
         String columnNames = String.join(", ", args.keySet());
         String valueDummies = String.join(", ", Collections.nCopies(args.size(), "?"));
@@ -53,7 +59,7 @@ public class GenericDBQuery {
      * @param column name of the column
      * @param value 
      * @return
-     * @throws SQLException
+     * @throws SQLException exception that occurs if the query fails
      */
     public static ResultSet selectWhereEqualsRecords(String table, String column, Integer value) throws SQLException {
         PreparedStatement query = SQLiteDB.conn

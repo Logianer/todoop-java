@@ -15,6 +15,7 @@ public class WindowManager {
     /**
      * changes the window on the demand
      * @param window window that should be changed
+     * @param windowTitle that title that should be displayed in the window
      */
     public static void changeWindow(JComponent window, String windowTitle) {
         dispatcher.onWindowChanged(window, windowTitle);

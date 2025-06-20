@@ -12,6 +12,7 @@ public interface WindowManagerDispatcher extends EventListener {
     /**
      * acts if the window has changed
      * @param event event that occured
+     * @param windowTitle title that the window has
      */
     void onWindowChanged(JComponent event, String windowTitle);
 

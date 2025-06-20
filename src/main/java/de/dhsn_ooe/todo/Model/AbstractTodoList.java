@@ -7,9 +7,19 @@ import java.sql.Timestamp;
  */
 public abstract class AbstractTodoList {
 
+    /**
+     * id of the list (for identification purposes)
+     */
     private int id;
+
+    /**
+     * title of the list
+     */
     private String title;
 
+    /**
+     * time that the list was last updated at (for sorting purposes)
+     */
     private Timestamp lastUpdated;
 
     /**
@@ -63,6 +73,12 @@ public abstract class AbstractTodoList {
         }
     }
 
+    /**
+     * gets the time that the list was last uptdated
+     * if it hasn't been updated the time defaults to zero
+     * which is January 1st 1970 00:00:00 GMT
+     * @return time the list was last updated at
+     */
     public Timestamp getLastUpdated() {
         if (lastUpdated == null) {
             lastUpdated = new Timestamp(0);
@@ -70,6 +86,10 @@ public abstract class AbstractTodoList {
         return lastUpdated;
     }
 
+    /**
+     * sets the time that the item was updated last
+     * @param lastUpdated time the update took place
+     */
     public void setLastUpdated(Timestamp lastUpdated) {
         this.lastUpdated = lastUpdated;
     }

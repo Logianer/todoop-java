@@ -6,6 +6,9 @@ package de.dhsn_ooe.todo.Model;
  */
 public class TodoCheckList extends AbstractTodoList {
 
+    /**
+     * type of the list (for distinction between note and checklist)
+     */
     public static final int TYPE = 1;
 
     /**
@@ -17,6 +20,9 @@ public class TodoCheckList extends AbstractTodoList {
         this.setTitle(title);
     }
 
+    /**
+     * gets the type of the list
+     */
     @Override
     public int getType() {
         return TYPE;

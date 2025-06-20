@@ -14,8 +14,14 @@ import de.dhsn_ooe.todo.Exception.OrphanedRelationException;
 import de.dhsn_ooe.todo.Model.TodoCheckList;
 import de.dhsn_ooe.todo.Model.TodoItem;
 
+/**
+ * class that controls all the todoitems
+ */
 public class TodoItemController implements CRUDController<TodoItem> {
 
+    /**
+     * listeners for the list that act if certain actions take place
+     */
     private static List<TodoControllerListener<TodoItemController>> listeners = new ArrayList<>();
 
     /**
@@ -46,6 +52,12 @@ public class TodoItemController implements CRUDController<TodoItem> {
         }
     }
 
+    /**
+     * creates a new todo item and inserts it into the specified table
+     * @param object item that should be created
+     * @return the id of the created object, 
+     * an error if the object couldn't be inserted into the table
+     */
     @Override
     public int create(TodoItem object) {
         // Update the list -> just change the updated_at timestamp in the database
@@ -62,6 +74,13 @@ public class TodoItemController implements CRUDController<TodoItem> {
         return 0;
     }
 
+    /**
+     * gets a todoitem by it's id, creates a new item with the data found and returns the item
+     * querys the database to look for the item in the todo_list table
+     * shows an error if the item wasn't found
+     * @param id id of the item
+     * @return the item
+     */
     @Override
     public TodoItem getById(int id) throws ItemNotFoundException, OrphanedRelationException {
         try {
@@ -83,6 +102,13 @@ public class TodoItemController implements CRUDController<TodoItem> {
         }
     }
 
+    /**
+     * updates an existing todoitem
+     * 
+     * @param object the item that should be updated
+     * @param id id of the item
+     * @return true if the update was successfull, false if not 
+     */
     @Override
     public boolean update(TodoItem object, int id) {
         PreparedStatement query;
@@ -103,6 +129,12 @@ public class TodoItemController implements CRUDController<TodoItem> {
         return false;
     }
 
+    /**
+     * deletes a todoitem from the table todo_list
+     * @param object the item that should be deleted
+     * @return true if the item was deleted successfully
+     * false if the item couldn't be deleted
+     */
     @Override
     public boolean delete(TodoItem object) {
         // Update the list -> just change the updated_at timestamp in the database
@@ -120,6 +152,10 @@ public class TodoItemController implements CRUDController<TodoItem> {
         }
     }
 
+    /**
+     * gets all todonotes from the table 
+     * @return list of all the objects (items) in the table (returns an error if the dbquery failed)
+     */
     @Override
     public List<TodoItem> getAll() {
         List<TodoItem> lists = new ArrayList<>();

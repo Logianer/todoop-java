@@ -11,13 +11,28 @@ import de.dhsn_ooe.todo.Events.TodoControllerListener;
 import de.dhsn_ooe.todo.Exception.ItemNotFoundException;
 import de.dhsn_ooe.todo.Model.TodoNote;
 
+/**
+ * class that controlls all the todo notes
+ */
 public class TodoNoteController
         implements CRUDController<TodoNote> {
 
+    /**
+     * listeners for the todonotecontroller
+     */
     private static List<TodoControllerListener<TodoNoteController>> listeners = new ArrayList<>();
 
+    /**
+     * name of the table the notes are part of
+     */
     private static final String TABLE_NAME = "todo_list";
 
+    /**
+     * creates a new todo note and inserts it into the specified table
+     * @param object note that should be created
+     * @return the id of the created object, 
+     * an error if the object couldn't be inserted into the table
+     */
     @Override
     public int create(TodoNote object) {
         int id;
@@ -54,7 +69,6 @@ public class TodoNoteController
 
     /**
      * notifies listeners if changes took place
-     * 
      */
     protected void fireEvent() {
         for (TodoControllerListener<TodoNoteController> listener : listeners) {
@@ -62,6 +76,13 @@ public class TodoNoteController
         }
     }
 
+    /**
+     * gets a todonote by it's id, creates a new note with the data found and returns the note
+     * querys the database to look for the note in the todo_list table
+     * shows an error if the note wasn't found
+     * @param id id of the note
+     * @return the note
+     */
     @Override
     public TodoNote getById(int id) throws ItemNotFoundException {
         try {
@@ -77,6 +98,13 @@ public class TodoNoteController
         }
     }
 
+    /**
+     * updates an existing todonote 
+     * 
+     * @param object the note that should be updated
+     * @param id id of the note 
+     * @return true if the update was successfull, false if not
+     */
     @Override
     public boolean update(TodoNote object, int id) {
         try {
@@ -99,6 +127,12 @@ public class TodoNoteController
         return false;
     }
 
+    /**
+     * deletes a todonote from the table todo_list
+     *  @param object the note that should be deleted
+     * @return true if the item was deleted successfully
+     * false if the item couldn't be deleted
+     */
     @Override
     public boolean delete(TodoNote object) {
         try {
@@ -114,6 +148,10 @@ public class TodoNoteController
         }
     }
 
+    /**
+     * gets all todonotes from the table 
+     * @return list of all the objects (notes) in the table (returns an error if the dbquery failed)
+     */
     @Override
     public List<TodoNote> getAll() {
         List<TodoNote> lists = new ArrayList<>();
@@ -134,6 +172,11 @@ public class TodoNoteController
 
     }
 
+    /**
+     * gets the content of a todonote
+     * @param note note that the content should be got from
+     * @return content of the note
+     */
     protected String getNoteRecord(TodoNote note) {
         try {
             ResultSet results = GenericDBQuery.selectWhereEqualsRecords("todo_note", "list_id", note.getId());

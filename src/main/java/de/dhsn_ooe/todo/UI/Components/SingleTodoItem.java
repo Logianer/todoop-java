@@ -37,7 +37,7 @@ public class SingleTodoItem extends JPanel {
      * constructs a single todoitem with the desired layout (right constraints for all the components) and two buttons (edit and delete)
      * adds listeners for the checkboxes and buttons that act on changes (e.g. item is deleted)
      * displays the text of the checkbox in a different way (striked though) and locks it for editing if checked
-     * @param item
+     * @param item item that the content should be displayed from 
      */
     public SingleTodoItem(TodoItem item) {
         super();

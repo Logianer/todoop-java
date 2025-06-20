@@ -41,7 +41,7 @@ public class ListCard extends JPanel {
     private AbstractTodoList list;
 
     /**
-     * constructs a card with its layout and title
+     * constructs a card with its layout, title and preview for the checklis or note
      * 
      * @param list list that is displayed on the card
      */
@@ -87,7 +87,6 @@ public class ListCard extends JPanel {
      * (e.g. window changes to the desired todolist or todonote if the open button
      * is pressed)
      * adds all the constructed elements to a panel
-     * 
      * @return panel with all elements
      */
     private JPanel createActionBar() {
@@ -165,6 +164,15 @@ public class ListCard extends JPanel {
         return bar;
     }
 
+    /**
+     * creates a preview for a checklist
+     * uses a stringbuilder construct the elements of the preview 
+     * (content of item plus symbol (checked/unchecked))
+     * displays the first five items of the list and shows if it is checked or not
+     * if the list doesn't have five items the number of items on the list will be displayed
+     * if the list has more then five element the additional number of items will be displayed
+     * @return preview of the list
+     */
     private JComponent createListPreview() {
         JLabel preview = new JLabel();
         List<TodoItem> items = new TodoListController().getRelatedItems((TodoCheckList) list);
@@ -185,10 +193,17 @@ public class ListCard extends JPanel {
         return preview;
     }
 
+    /**
+     * creates a preview for a note
+     * show that the note has no content if it's empty
+     * if there is content it will be shown as preview
+     * if the content is longer than 100 characters only the first 100 are shown
+     * @return preview of the note
+     */
     private JComponent createNotePreview() {
         JLabel preview = new JLabel();
         String content = ((TodoNote) list).getContent();
-        if (content != null) {
+        if (content.isBlank() != true) {
             preview.setText(content.strip().substring(0, Integer.min(content.length(), 100)) + "...");
         } else {
             preview.setText("<html><i>Leere Notiz</i></html>");

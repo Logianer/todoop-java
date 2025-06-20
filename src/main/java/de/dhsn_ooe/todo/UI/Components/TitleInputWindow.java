@@ -28,8 +28,8 @@ public class TitleInputWindow extends InputWindow {
 
     /**
      * constructs a title input window
-     * @param message ..
-     * @param action ..
+     * @param message message that will be displayed in the input window
+     * @param action action that is going to be performed
      * @param content content that will be put in the input field by the user
      */
     public TitleInputWindow(String message, String action, String content) {

@@ -32,11 +32,20 @@ public class SingleTodoList extends JPanel {
      * layout of the list
      */
     protected BorderLayout layout = new BorderLayout();
+
+    /**
+     * list that is displayed
+     */
     private TodoCheckList list;
+
+    /**
+     * list that helps to display the list in the right way
+     */
     protected TodoCheckboxList listDisplay;
 
     /**
      * constructs a list with the given elements, a top bar and the layout of the panel
+     * @param list list the data should be displayed from
      */
     public SingleTodoList(TodoCheckList list) {
         super();
