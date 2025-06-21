@@ -31,7 +31,6 @@ public class MainFrame extends JFrame {
     public MainFrame() {
         super();
         FlatCyanLightIJTheme.setup();
-        UIManager.put("MenuBar.background", Color.RED);
         this.setSize(800, 600);
         this.setTitle("Todo-App | Start");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
