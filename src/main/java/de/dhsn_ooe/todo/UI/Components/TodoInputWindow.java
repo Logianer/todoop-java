@@ -19,7 +19,7 @@ public class TodoInputWindow extends InputWindow {
     protected JTextArea area;
 
     /**
-     * constructs an input window for a todod item
+     * constructs an input window for a todo item
      * @param action action that will be performed (edit, add...)
      * @param content content that will be put into the textfield by the user
      */
@@ -43,7 +43,7 @@ public class TodoInputWindow extends InputWindow {
     }
     
     /**
-     * constructs an empty window with no content and the heading "Hinzufügen"
+     * constructs an empty window with no content and sets the action text
      */
     public TodoInputWindow() {
         this("Hinzufügen", "");

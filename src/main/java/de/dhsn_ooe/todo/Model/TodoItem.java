@@ -127,7 +127,9 @@ public class TodoItem implements Comparable<TodoItem> {
     /**
      * compares a todoitem with an other one
      * if the state of the two items is the same the timestamp will be compared
-     * 
+     * the sorting will be as follows:
+     * 1) all unchecked items are sorted in ascending order of their updated_at timestamp
+     * 2) all checked items are sorted in descending order of their timestamp
      * @param o2 item that the given item should be compared to
      */
     public int compareTo(TodoItem o2) {

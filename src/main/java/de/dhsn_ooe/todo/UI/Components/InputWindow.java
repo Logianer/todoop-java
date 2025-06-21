@@ -190,7 +190,7 @@ public class InputWindow extends JFrame {
 
     /**
      * notifys listeners if certain actions took place
-     * only enables the button to close the window if the user put something into the input component
+     * the button is disabled during the execution of actions to prevent double execution
      * @param e event that took place
      */
     protected void fireActionEvent(ActionEvent e) {

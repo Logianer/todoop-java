@@ -28,6 +28,9 @@ public class TitleInputWindow extends InputWindow {
 
     /**
      * constructs a title input window
+     * a keyListener is added that prevents the user to continue if the inputField is blank.
+     * 
+     * when focusing the inputField and pressing ENTER, a button press on the actionButton is simulated
      * @param message message that will be displayed in the input window
      * @param action action that is going to be performed
      * @param content content that will be put in the input field by the user

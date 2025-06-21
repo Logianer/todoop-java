@@ -91,7 +91,7 @@ public class Dashboard extends JPanel {
         });
 
         addNoteButton.addActionListener(e -> {
-            TitleInputWindow window = new TitleInputWindow();
+            TitleInputWindow window = new TitleInputWindow("Name der neuen Notiz eingeben:", "Hinzufügen", "");
 
             window.addActionListener(l -> {
                 TodoNote newList = new TodoNote(window.getTextContent());
